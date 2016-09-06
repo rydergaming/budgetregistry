@@ -37,6 +37,10 @@
       <HintPath>..\packages\Autofac.4.1.0\lib\net45\Autofac.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="CsvHelper, Version=2.0.0.0, Culture=neutral, PublicKeyToken=8c4959082be5c823, processorArchitecture=MSIL">
+      <HintPath>..\packages\CsvHelper.2.16.1.0\lib\net45\CsvHelper.dll</HintPath>
+      <Private>True</Private>
+    </Reference>
     <Reference Include="DevExpress.BonusSkins.v15.1" />
     <Reference Include="DevExpress.Data.v15.1" />
     <Reference Include="DevExpress.Printing.v15.1.Core" />
@@ -83,6 +87,7 @@
     </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Context.cs" />
+    <Compile Include="Model\CsvModel.cs" />
     <Compile Include="Model\IContext.cs" />
     <Compile Include="Model\Password.cs" />
     <Compile Include="View\AddSpendingForm.cs">

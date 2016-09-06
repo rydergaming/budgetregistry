@@ -89,6 +89,7 @@
             this.Controls.Add(this.spendingGrid);
             this.Name = "ViewSpendingItems";
             this.Text = "ViewSpendingItems";
+            this.Load += new System.EventHandler(this.ViewSpendingItems_Load);
             ((System.ComponentModel.ISupportInitialize)(this.spendingGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.spendingItemSource)).EndInit();
             this.ResumeLayout(false);
@@ -98,9 +99,9 @@
         #endregion
 
         private System.Windows.Forms.DataGridView spendingGrid;
-        private System.Windows.Forms.BindingSource spendingItemSource;
         private System.Windows.Forms.DataGridViewTextBoxColumn idDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn nameDataGridViewTextBoxColumn;
         private System.Windows.Forms.DataGridViewTextBoxColumn lastValueDataGridViewTextBoxColumn;
+        public System.Windows.Forms.BindingSource spendingItemSource;
     }
 }
