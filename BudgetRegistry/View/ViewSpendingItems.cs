@@ -17,7 +17,6 @@ namespace BudgetRegistry.View
         public ViewSpendingItems()
         {
             InitializeComponent();
-   
         }
 
         public void refresh()
@@ -29,7 +28,7 @@ namespace BudgetRegistry.View
         private void ViewSpendingItems_Load(object sender, EventArgs e)
         {
             spendingGrid.DataSource = Program._myContext.SpendingItems.ToList();
-            spendingGrid.DataSource = spendingItemSource.DataSource;
+            //spendingGrid.DataSource = spendingItemSource.DataSource;
         }
     }
 }

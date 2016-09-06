@@ -90,11 +90,18 @@
     <Compile Include="Model\CsvModel.cs" />
     <Compile Include="Model\IContext.cs" />
     <Compile Include="Model\Password.cs" />
-    <Compile Include="View\AddSpendingForm.cs">
+    <Compile Include="Model\ViewedSpendingModel.cs" />
+    <Compile Include="View\AddSpending.cs">
       <SubType>Form</SubType>
     </Compile>
-    <Compile Include="View\AddSpendingForm.Designer.cs">
-      <DependentUpon>AddSpendingForm.cs</DependentUpon>
+    <Compile Include="View\AddSpending.Designer.cs">
+      <DependentUpon>AddSpending.cs</DependentUpon>
+    </Compile>
+    <Compile Include="View\AddSpendingItemForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\AddSpendingItemForm.Designer.cs">
+      <DependentUpon>AddSpendingItemForm.cs</DependentUpon>
     </Compile>
     <Compile Include="View\MainForm.cs">
       <SubType>Form</SubType>
@@ -122,11 +129,20 @@
     <Compile Include="View\ViewSpendingItems.Designer.cs">
       <DependentUpon>ViewSpendingItems.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\ViewSpendings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\ViewSpendings.Designer.cs">
+      <DependentUpon>ViewSpendings.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Migrations\201609050847265_initial.resx">
       <DependentUpon>201609050847265_initial.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="View\AddSpendingForm.resx">
-      <DependentUpon>AddSpendingForm.cs</DependentUpon>
+    <EmbeddedResource Include="View\AddSpending.resx">
+      <DependentUpon>AddSpending.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\AddSpendingItemForm.resx">
+      <DependentUpon>AddSpendingItemForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\LoginForm.resx">
       <DependentUpon>LoginForm.cs</DependentUpon>
@@ -147,10 +163,16 @@
     <EmbeddedResource Include="View\ViewSpendingItems.resx">
       <DependentUpon>ViewSpendingItems.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="View\ViewSpendings.resx">
+      <DependentUpon>ViewSpendings.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="App.config" />
     <None Include="packages.config" />
+    <None Include="Properties\DataSources\BudgetRegistry.Model.CategoryModel.datasource" />
     <None Include="Properties\DataSources\BudgetRegistry.Model.SpendingItemModel.datasource" />
+    <None Include="Properties\DataSources\BudgetRegistry.Model.SpendingModel.datasource" />
     <None Include="Properties\DataSources\BudgetRegistry.Model.UserModel.datasource" />
+    <None Include="Properties\DataSources\BudgetRegistry.Model.ViewedSpendingModel.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

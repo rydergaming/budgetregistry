@@ -22,8 +22,10 @@ namespace BudgetRegistry
         {
             ContainerBuilder builder = new ContainerBuilder();
             builder.RegisterType<MainForm>().AsSelf().InstancePerDependency();
-            builder.RegisterType<ViewSpendingItems>().AsSelf().InstancePerLifetimeScope();
-            builder.RegisterType<AddSpendingForm>().AsSelf().InstancePerLifetimeScope();
+            builder.RegisterType<ViewSpendingItems>().Named<Form>("ViewSpendingItems").InstancePerLifetimeScope();
+            builder.RegisterType<ViewSpendings>().Named<Form>("ViewSpendings").InstancePerLifetimeScope();
+            builder.RegisterType<AddSpendingItemForm>().Named<Form>("AddSpendingItemForm").InstancePerLifetimeScope();
+            builder.RegisterType<AddSpending>().Named<Form>("AddSpending").InstancePerLifetimeScope();
             builder.RegisterType<LoginForm>().AsSelf().InstancePerLifetimeScope();
 
             container = builder.Build();

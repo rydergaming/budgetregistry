@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace BudgetRegistry.View
 {
-    public partial class AddSpendingForm : Form
+    public partial class AddSpending : Form
     {
-        public AddSpendingForm()
+        public AddSpending()
         {
             InitializeComponent();
         }

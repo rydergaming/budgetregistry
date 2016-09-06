@@ -16,48 +16,23 @@ namespace BudgetRegistry
 {
     public partial class MainForm : DevExpress.XtraBars.Ribbon.RibbonForm
     {
-        UserModel _currentUser;
+        public UserModel CurrentUser;
         
         List<Form> activeForms = new List<Form>();
         public MainForm()
         {
             InitializeComponent();
-            var lifeTimeScope = Program.container.BeginLifetimeScope();
-            Form form = lifeTimeScope.Resolve<ViewSpendingItems>();
-            form.MdiParent = this;
-            form.WindowState = FormWindowState.Maximized;
-            form.Show();
-            activeForms.Add(form);
-            form.FormClosed += delegate
-            {
-                activeForms.Remove(form);
-            };
         }
 
         private void addSpendingItem_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            var lifeTimeScope = Program.container.BeginLifetimeScope();
-            Form form = lifeTimeScope.Resolve<AddSpendingForm>();
-            foreach (Form sameForm in Application.OpenForms)
-            {
-                if (sameForm.GetType() == typeof(AddSpendingForm))
-                {
-                    sameForm.Activate();
-                    return;
-                }
-            }
-            form.MdiParent = this;
-            form.WindowState = FormWindowState.Maximized;
-            form.Show();
-            form.FormClosed += delegate
-            {
-
-            };
+            OpenForm("AddSpendingItemForm");
         }
 
         private void spendingItemsButton_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-
+            OpenForm("ViewSpendingItems");
+            
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -67,14 +42,15 @@ namespace BudgetRegistry
                 var form = lifeTimeScope.Resolve<LoginForm>();
                 if (form.ShowDialog() == DialogResult.OK)
                 {
-                    _currentUser = form.user;
-                    toolStripStatusLabel.Text = "Logged in as " + _currentUser.UserName;
+                    CurrentUser = form.user;
+                    toolStripStatusLabel.Text = "Logged in as " + CurrentUser.UserName;
                 }
                 else
                 {
                     Close();
                 }
             }
+            OpenForm("ViewSpendingItems");
         }
 
         private void barButtonItem1_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -84,8 +60,8 @@ namespace BudgetRegistry
                 var form = lifeTimeScope.Resolve<LoginForm>();
                 if (form.ShowDialog() == DialogResult.OK)
                 {
-                    _currentUser = form.user;
-                    toolStripStatusLabel.Text = "Logged in as " + _currentUser.UserName;
+                    CurrentUser = form.user;
+                    toolStripStatusLabel.Text = "Logged in as " + CurrentUser.UserName;
                     for (int i = 0; i < Application.OpenForms.Count - 1; i++)
                     {
                         if (Application.OpenForms[i].GetType() != typeof(MainForm))
@@ -135,6 +111,7 @@ namespace BudgetRegistry
                             {
                                 var viewForm = (ViewSpendingItems)form;
                                 viewForm.refresh();
+                                break;
                             }
                         };
                     }));
@@ -191,6 +168,32 @@ namespace BudgetRegistry
                 }
                 loadSpendingItemButton.Enabled = true;
             }
+        }
+
+        private void OpenForm(string openForm)
+        {
+            var lifeTimeScope = Program.container.BeginLifetimeScope();
+            Form form = lifeTimeScope.ResolveNamed<Form>(openForm);
+            foreach (Form sameForm in Application.OpenForms)
+            {
+                if (sameForm.GetType() == form.GetType())
+                {
+                    sameForm.Activate();
+                    return;
+                }
+            }
+            form.MdiParent = this;
+            form.WindowState = FormWindowState.Maximized;
+            form.Show();
+            form.FormClosing += delegate
+            {
+                lifeTimeScope.Dispose();
+            };
+        }
+
+        private void spendingButton_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            OpenForm("ViewSpendings");
         }
     }
 }

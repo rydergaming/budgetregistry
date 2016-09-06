@@ -35,6 +35,7 @@
             this.spendingItemsButton = new DevExpress.XtraBars.BarButtonItem();
             this.spendingButton = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
+            this.addSpendingButton = new DevExpress.XtraBars.BarButtonItem();
             this.spendingRibbonPage = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.viewSpending = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -59,9 +60,10 @@
             this.addSpendingItem,
             this.spendingItemsButton,
             this.spendingButton,
-            this.barButtonItem1});
+            this.barButtonItem1,
+            this.addSpendingButton});
             this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl1.MaxItemId = 9;
+            this.ribbonControl1.MaxItemId = 10;
             this.ribbonControl1.Name = "ribbonControl1";
             this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.spendingRibbonPage,
@@ -72,7 +74,7 @@
             // 
             // loadSpendingItemButton
             // 
-            this.loadSpendingItemButton.Caption = "Load Spending";
+            this.loadSpendingItemButton.Caption = "Load Spending Items";
             this.loadSpendingItemButton.Glyph = ((System.Drawing.Image)(resources.GetObject("loadSpendingItemButton.Glyph")));
             this.loadSpendingItemButton.Id = 3;
             this.loadSpendingItemButton.Name = "loadSpendingItemButton";
@@ -81,7 +83,7 @@
             // 
             // addSpendingItem
             // 
-            this.addSpendingItem.Caption = "Add Spending";
+            this.addSpendingItem.Caption = "Add/Edit Spending Item";
             this.addSpendingItem.Glyph = ((System.Drawing.Image)(resources.GetObject("addSpendingItem.Glyph")));
             this.addSpendingItem.Id = 4;
             this.addSpendingItem.Name = "addSpendingItem";
@@ -104,6 +106,7 @@
             this.spendingButton.Id = 6;
             this.spendingButton.Name = "spendingButton";
             this.spendingButton.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            this.spendingButton.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.spendingButton_ItemClick);
             // 
             // barButtonItem1
             // 
@@ -113,6 +116,14 @@
             this.barButtonItem1.Name = "barButtonItem1";
             this.barButtonItem1.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
             this.barButtonItem1.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem1_ItemClick);
+            // 
+            // addSpendingButton
+            // 
+            this.addSpendingButton.Caption = "Add Spending";
+            this.addSpendingButton.Glyph = ((System.Drawing.Image)(resources.GetObject("addSpendingButton.Glyph")));
+            this.addSpendingButton.Id = 9;
+            this.addSpendingButton.Name = "addSpendingButton";
+            this.addSpendingButton.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
             // 
             // spendingRibbonPage
             // 
@@ -127,12 +138,13 @@
             this.ribbonPageGroup1.Glyph = ((System.Drawing.Image)(resources.GetObject("ribbonPageGroup1.Glyph")));
             this.ribbonPageGroup1.ItemLinks.Add(this.loadSpendingItemButton);
             this.ribbonPageGroup1.ItemLinks.Add(this.addSpendingItem);
+            this.ribbonPageGroup1.ItemLinks.Add(this.spendingItemsButton);
             this.ribbonPageGroup1.Name = "ribbonPageGroup1";
             this.ribbonPageGroup1.ShowCaptionButton = false;
             // 
             // viewSpending
             // 
-            this.viewSpending.ItemLinks.Add(this.spendingItemsButton);
+            this.viewSpending.ItemLinks.Add(this.addSpendingButton);
             this.viewSpending.ItemLinks.Add(this.spendingButton);
             this.viewSpending.Name = "viewSpending";
             // 
@@ -223,6 +235,7 @@
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup usersRibbonGroup;
         private System.ComponentModel.BackgroundWorker backgroundWorker;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLoad;
+        private DevExpress.XtraBars.BarButtonItem addSpendingButton;
     }
 }
 
