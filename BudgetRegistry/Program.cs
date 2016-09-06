@@ -6,12 +6,14 @@ using DevExpress.UserSkins;
 using DevExpress.Skins;
 using Autofac;
 using BudgetRegistry.View;
+using BudgetRegistry.Model;
 
 namespace BudgetRegistry
 {
     static class Program
     {
         public static IContainer container;
+        public static Context _myContext = new Context();
         /// <summary>
         /// The main entry point for the application.
         /// </summary>

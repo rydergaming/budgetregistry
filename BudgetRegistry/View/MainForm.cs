@@ -17,7 +17,7 @@ namespace BudgetRegistry
     public partial class MainForm : DevExpress.XtraBars.Ribbon.RibbonForm
     {
         UserModel _currentUser;
-        Context _myContext = new Context();
+        
         List<Form> activeForms = new List<Form>();
         public MainForm()
         {
@@ -133,7 +133,7 @@ namespace BudgetRegistry
                         {
                             if (form.GetType() == typeof(ViewSpendingItems))
                             {
-                                ViewSpendingItems viewForm = (ViewSpendingItems)form;
+                                var viewForm = (ViewSpendingItems)form;
                                 viewForm.refresh();
                             }
                         };
@@ -148,37 +148,37 @@ namespace BudgetRegistry
                         CategoryName = elements[2],
                         Value = Int32.Parse(elements[3])
                     };
-                    var category = _myContext.Categroies.Where(c => c.Name == item.CategoryName).FirstOrDefault();
+                    var category = Program._myContext.Categroies.Where(c => c.Name == item.CategoryName).FirstOrDefault();
 
                     if (category == null)
                     {
-                        _myContext.Categroies.Add(new CategoryModel
+                        Program._myContext.Categroies.Add(new CategoryModel
                         {
                             Name = item.CategoryName
                         });
-                        
-                        _myContext.SaveChanges();
+
+                        Program._myContext.SaveChanges();
                     }
-                    category = _myContext.Categroies.Where(c => c.Name == item.CategoryName).FirstOrDefault();
+                    category = Program._myContext.Categroies.Where(c => c.Name == item.CategoryName).FirstOrDefault();
 
 
-                    var spendItem = _myContext.SpendingItems.Where(s => s.Id == item.Id).FirstOrDefault();
+                    var spendItem = Program._myContext.SpendingItems.Where(s => s.Id == item.Id).FirstOrDefault();
                     if (spendItem == null)
                     {
-                        _myContext.SpendingItems.Add(new SpendingItemModel
+                        Program._myContext.SpendingItems.Add(new SpendingItemModel
                         {
                             CategoryId = category.Id,
                             LastValue = item.Value,
                             Name = item.Name
                         });
-                        _myContext.SaveChanges();
+                        Program._myContext.SaveChanges();
                     }
                     else
                     {
                         spendItem.CategoryId = category.Id;
                         spendItem.LastValue = item.Value;
                         spendItem.Name = item.Name;
-                        _myContext.SaveChanges();
+                        Program._myContext.SaveChanges();
                         
                     }
 

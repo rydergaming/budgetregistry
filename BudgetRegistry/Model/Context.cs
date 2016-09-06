@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BudgetRegistry.Model
 {
-    class Context : DbContext, IContext
+    public class Context : DbContext, IContext
     {
         public Context() : this("BudgetRegistry")
             {
