@@ -90,6 +90,7 @@
     <Compile Include="Model\CsvModel.cs" />
     <Compile Include="Model\IContext.cs" />
     <Compile Include="Model\Password.cs" />
+    <Compile Include="Model\Reusable.cs" />
     <Compile Include="Model\ViewedSpendingModel.cs" />
     <Compile Include="View\AddSpending.cs">
       <SubType>Form</SubType>

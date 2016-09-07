@@ -105,15 +105,8 @@ namespace BudgetRegistry
                     Invoke(new Action(() => toolStripStatusLoad.Text = "Line: " + i));
                     Invoke(new Action(() =>
                     {
-                        foreach (Form form in Application.OpenForms)
-                        {
-                            if (form.GetType() == typeof(ViewSpendingItems))
-                            {
-                                var viewForm = (ViewSpendingItems)form;
-                                viewForm.refresh();
-                                break;
-                            }
-                        };
+                        ViewSpendingItems form = (ViewSpendingItems)Reusable.GetForm("BudgetRegistry.View.ViewSpendingItems");
+                        form.refresh();
                     }));
                     line = reader.ReadLine();
                     line = line.Replace("\"", "").Trim();
@@ -194,6 +187,11 @@ namespace BudgetRegistry
         private void spendingButton_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             OpenForm("ViewSpendings");
+        }
+
+        private void addSpendingButton_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            OpenForm("AddSpending");
         }
     }
 }

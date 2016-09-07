@@ -14,6 +14,8 @@ namespace BudgetRegistry.View
     public partial class ViewSpendings : Form
     {
         UserModel _user;
+        Context context = new Context();
+        List<ViewedSpendingModel> list = new List<ViewedSpendingModel>();
         public ViewSpendings()
         {
             InitializeComponent();
@@ -42,6 +44,37 @@ namespace BudgetRegistry.View
                 toolStripStatusLabel.Text = "Logged in as " + _user.UserName +
                 " | Showing all spendings.";
             }
+            var spendingList = context.Spendings.ToList();
+            var spendingItemList = context.SpendingItems.ToList();
+            var categoryList = context.Categroies.ToList();
+
+            //REWORK THIS, STEVE!
+            foreach(var item in spendingList)
+            {
+                foreach(var spendingItem in spendingItemList)
+                {
+                    foreach(var categoryItem in categoryList)
+                    {
+                        if (item.SpendingItemId == spendingItem.Id)
+                            if (spendingItem.CategoryId == categoryItem.Id)
+                            {
+                                var user = context.Users.Where(u => u.Id == item.UserId).FirstOrDefault();
+                                ViewedSpendingModel vsm = new ViewedSpendingModel
+                                {
+                                    Id = item.Id,
+                                    AddTime = item.CreatedTime,
+                                    CategoryName = categoryItem.Name,
+                                    ItemName = spendingItem.Name,
+                                    Value = spendingItem.LastValue,
+                                    UserName = user.UserName
+                                };
+                                list.Add(vsm);
+                            }
+                    }
+                }
+
+            }
+            dataGridView1.DataSource = list;
         }
     }
 }

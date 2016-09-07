@@ -28,44 +28,50 @@
         /// </summary>
         private void InitializeComponent()
         {
-            this.textBox1 = new System.Windows.Forms.TextBox();
-            this.textBox2 = new System.Windows.Forms.TextBox();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.spendingNameTextBox = new System.Windows.Forms.TextBox();
+            this.categoryTextBox = new System.Windows.Forms.TextBox();
+            this.numericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.dateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
-            this.button2 = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            this.okButton = new System.Windows.Forms.Button();
+            this.CanceButton = new System.Windows.Forms.Button();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
-            // textBox1
+            // spendingNameTextBox
             // 
-            this.textBox1.Location = new System.Drawing.Point(143, 12);
-            this.textBox1.Name = "textBox1";
-            this.textBox1.Size = new System.Drawing.Size(310, 20);
-            this.textBox1.TabIndex = 0;
+            this.spendingNameTextBox.Location = new System.Drawing.Point(143, 12);
+            this.spendingNameTextBox.Name = "spendingNameTextBox";
+            this.spendingNameTextBox.Size = new System.Drawing.Size(310, 20);
+            this.spendingNameTextBox.TabIndex = 0;
             // 
-            // textBox2
+            // categoryTextBox
             // 
-            this.textBox2.Location = new System.Drawing.Point(143, 51);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(310, 20);
-            this.textBox2.TabIndex = 1;
+            this.categoryTextBox.Location = new System.Drawing.Point(143, 51);
+            this.categoryTextBox.Name = "categoryTextBox";
+            this.categoryTextBox.Size = new System.Drawing.Size(310, 20);
+            this.categoryTextBox.TabIndex = 1;
             // 
-            // numericUpDown1
+            // numericUpDown
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(143, 87);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(310, 20);
-            this.numericUpDown1.TabIndex = 3;
+            this.numericUpDown.Location = new System.Drawing.Point(143, 87);
+            this.numericUpDown.Maximum = new decimal(new int[] {
+            100000,
+            0,
+            0,
+            0});
+            this.numericUpDown.Name = "numericUpDown";
+            this.numericUpDown.Size = new System.Drawing.Size(310, 20);
+            this.numericUpDown.TabIndex = 3;
             // 
-            // dateTimePicker1
+            // dateTimePicker
             // 
-            this.dateTimePicker1.Location = new System.Drawing.Point(143, 125);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(310, 20);
-            this.dateTimePicker1.TabIndex = 4;
+            this.dateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dateTimePicker.Location = new System.Drawing.Point(143, 125);
+            this.dateTimePicker.Name = "dateTimePicker";
+            this.dateTimePicker.Size = new System.Drawing.Size(310, 20);
+            this.dateTimePicker.TabIndex = 4;
             // 
             // label1
             // 
@@ -85,40 +91,41 @@
             this.label2.TabIndex = 6;
             this.label2.Text = "Category";
             // 
-            // button1
+            // okButton
             // 
-            this.button1.Location = new System.Drawing.Point(271, 185);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 7;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
+            this.okButton.Location = new System.Drawing.Point(237, 185);
+            this.okButton.Name = "okButton";
+            this.okButton.Size = new System.Drawing.Size(97, 23);
+            this.okButton.TabIndex = 7;
+            this.okButton.Text = "Add Spending";
+            this.okButton.UseVisualStyleBackColor = true;
+            this.okButton.Click += new System.EventHandler(this.okButton_Click);
             // 
-            // button2
+            // CanceButton
             // 
-            this.button2.Location = new System.Drawing.Point(378, 185);
-            this.button2.Name = "button2";
-            this.button2.Size = new System.Drawing.Size(75, 23);
-            this.button2.TabIndex = 8;
-            this.button2.Text = "button2";
-            this.button2.UseVisualStyleBackColor = true;
+            this.CanceButton.Location = new System.Drawing.Point(352, 185);
+            this.CanceButton.Name = "CanceButton";
+            this.CanceButton.Size = new System.Drawing.Size(101, 23);
+            this.CanceButton.TabIndex = 8;
+            this.CanceButton.Text = "Cancel";
+            this.CanceButton.UseVisualStyleBackColor = true;
             // 
             // AddSpending
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(465, 220);
-            this.Controls.Add(this.button2);
-            this.Controls.Add(this.button1);
+            this.Controls.Add(this.CanceButton);
+            this.Controls.Add(this.okButton);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
-            this.Controls.Add(this.dateTimePicker1);
-            this.Controls.Add(this.numericUpDown1);
-            this.Controls.Add(this.textBox2);
-            this.Controls.Add(this.textBox1);
+            this.Controls.Add(this.dateTimePicker);
+            this.Controls.Add(this.numericUpDown);
+            this.Controls.Add(this.categoryTextBox);
+            this.Controls.Add(this.spendingNameTextBox);
             this.Name = "AddSpending";
             this.Text = "AddSpending";
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -126,13 +133,13 @@
 
         #endregion
 
-        private System.Windows.Forms.TextBox textBox1;
-        private System.Windows.Forms.TextBox textBox2;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.TextBox spendingNameTextBox;
+        private System.Windows.Forms.TextBox categoryTextBox;
+        private System.Windows.Forms.NumericUpDown numericUpDown;
+        private System.Windows.Forms.DateTimePicker dateTimePicker;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.Button button2;
+        private System.Windows.Forms.Button okButton;
+        private System.Windows.Forms.Button CanceButton;
     }
 }

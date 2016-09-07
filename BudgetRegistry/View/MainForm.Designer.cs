@@ -124,6 +124,7 @@
             this.addSpendingButton.Id = 9;
             this.addSpendingButton.Name = "addSpendingButton";
             this.addSpendingButton.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            this.addSpendingButton.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.addSpendingButton_ItemClick);
             // 
             // spendingRibbonPage
             // 

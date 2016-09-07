@@ -40,11 +40,9 @@ namespace BudgetRegistry.View
 
         private void addItemButton_Click(object sender, EventArgs e)
         {
-            var name = _myContext.SpendingItems.Where(n => n.Name == itemNameTextBox.Text)
-                .Select(n => n.Name)
-                .FirstOrDefault();
+            var name = Reusable.CheckSpendingItem(itemNameTextBox.Text).Name;
 
-            var category = _myContext.Categroies.Where(c => c.Name == itemNameTextBox.Text).FirstOrDefault();
+            var category = Reusable.CheckCategory(itemCategoryTextBox.Text);
 
             if (name != null)
             {
@@ -59,10 +57,10 @@ namespace BudgetRegistry.View
 
                         _myContext.SaveChanges();
                     }
-                    category = _myContext.Categroies.Where(c => c.Name == itemNameTextBox.Text).FirstOrDefault();
+                    category = Reusable.CheckCategory(itemCategoryTextBox.Text);
 
-                    var item = _myContext.SpendingItems.Where(n => n.Name == itemNameTextBox.Text)
-                        .FirstOrDefault();
+                    var item = Reusable.CheckSpendingItem(itemNameTextBox.Text);
+                        
                     item.LastValue = (int)numericUpDown.Value;
                     item.CategoryId = category.Id;
                     _myContext.SaveChanges();
@@ -83,7 +81,7 @@ namespace BudgetRegistry.View
 
                     _myContext.SaveChanges();
                 }
-                category = _myContext.Categroies.Where(c => c.Name == itemNameTextBox.Text).FirstOrDefault();
+                category = Reusable.CheckCategory(itemCategoryTextBox.Text);
 
                 _myContext.SpendingItems.Add(
                     new SpendingItemModel
@@ -100,15 +98,8 @@ namespace BudgetRegistry.View
         }
         private void RefreshViewForm()
         {
-            foreach (Form form in Application.OpenForms)
-            {
-                if (form.GetType() == typeof(ViewSpendingItems))
-                {
-                    var viewForm = (ViewSpendingItems)form;
-                    viewForm.refresh();
-                    break;
-                }
-            };
+            ViewSpendingItems form = (ViewSpendingItems)Reusable.GetForm("BudgetRegistry.View.ViewSpendingItems");
+            form.refresh();
         }
     }
 }
