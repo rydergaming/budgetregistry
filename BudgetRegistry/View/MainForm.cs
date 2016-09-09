@@ -293,5 +293,10 @@ namespace BudgetRegistry
         {
             OpenForm("MonthlyStats");
         }
+
+        private void yearlyStatsButton_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            OpenForm("YearlyStats");
+        }
     }
 }

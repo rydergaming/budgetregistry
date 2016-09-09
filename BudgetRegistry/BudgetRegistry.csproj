@@ -142,6 +142,12 @@
     <Compile Include="View\ViewSpendings.Designer.cs">
       <DependentUpon>ViewSpendings.cs</DependentUpon>
     </Compile>
+    <Compile Include="View\YearlyStats.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="View\YearlyStats.Designer.cs">
+      <DependentUpon>YearlyStats.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="Migrations\201609050847265_initial.resx">
       <DependentUpon>201609050847265_initial.cs</DependentUpon>
     </EmbeddedResource>
@@ -175,6 +181,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="View\ViewSpendings.resx">
       <DependentUpon>ViewSpendings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="View\YearlyStats.resx">
+      <DependentUpon>YearlyStats.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="App.config" />
     <None Include="packages.config" />

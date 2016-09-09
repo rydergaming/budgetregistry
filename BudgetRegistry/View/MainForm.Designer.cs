@@ -52,6 +52,7 @@
             this.toolStripStatusLoadSpending = new System.Windows.Forms.ToolStripStatusLabel();
             this.backgroundItemWorker = new System.ComponentModel.BackgroundWorker();
             this.backgroundSpendingWorker = new System.ComponentModel.BackgroundWorker();
+            this.yearlyStatsButton = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -68,9 +69,10 @@
             this.barButtonItem1,
             this.addSpendingButton,
             this.loadSpendingsButton,
-            this.monthlyStatsButton});
+            this.monthlyStatsButton,
+            this.yearlyStatsButton});
             this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl1.MaxItemId = 12;
+            this.ribbonControl1.MaxItemId = 13;
             this.ribbonControl1.Name = "ribbonControl1";
             this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.spendingRibbonPage,
@@ -190,6 +192,7 @@
             // statsMonthly
             // 
             this.statsMonthly.ItemLinks.Add(this.monthlyStatsButton);
+            this.statsMonthly.ItemLinks.Add(this.yearlyStatsButton);
             this.statsMonthly.Name = "statsMonthly";
             // 
             // usersPage
@@ -241,6 +244,15 @@
             this.backgroundSpendingWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundSpendingWorker_DoWork);
             this.backgroundSpendingWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundSpendingWorker_RunWorkerCompleted);
             // 
+            // yearlyStatsButton
+            // 
+            this.yearlyStatsButton.Caption = "Yearly Statistics";
+            this.yearlyStatsButton.Glyph = ((System.Drawing.Image)(resources.GetObject("yearlyStatsButton.Glyph")));
+            this.yearlyStatsButton.Id = 12;
+            this.yearlyStatsButton.Name = "yearlyStatsButton";
+            this.yearlyStatsButton.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            this.yearlyStatsButton.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.yearlyStatsButton_ItemClick);
+            // 
             // MainForm
             // 
             this.AllowFormGlass = DevExpress.Utils.DefaultBoolean.False;
@@ -287,6 +299,7 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLoadSpending;
         private DevExpress.XtraBars.BarButtonItem monthlyStatsButton;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup statsMonthly;
+        private DevExpress.XtraBars.BarButtonItem yearlyStatsButton;
     }
 }
 
