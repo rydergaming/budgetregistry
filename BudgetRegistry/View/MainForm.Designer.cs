@@ -36,17 +36,22 @@
             this.spendingButton = new DevExpress.XtraBars.BarButtonItem();
             this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
             this.addSpendingButton = new DevExpress.XtraBars.BarButtonItem();
+            this.loadSpendingsButton = new DevExpress.XtraBars.BarButtonItem();
+            this.monthlyStatsButton = new DevExpress.XtraBars.BarButtonItem();
             this.spendingRibbonPage = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.viewSpending = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.incomePage = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.statisticsPage = new DevExpress.XtraBars.Ribbon.RibbonPage();
+            this.statsMonthly = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.usersPage = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.usersRibbonGroup = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.statusStrip1 = new System.Windows.Forms.StatusStrip();
             this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
             this.toolStripStatusLoad = new System.Windows.Forms.ToolStripStatusLabel();
-            this.backgroundWorker = new System.ComponentModel.BackgroundWorker();
+            this.toolStripStatusLoadSpending = new System.Windows.Forms.ToolStripStatusLabel();
+            this.backgroundItemWorker = new System.ComponentModel.BackgroundWorker();
+            this.backgroundSpendingWorker = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -61,9 +66,11 @@
             this.spendingItemsButton,
             this.spendingButton,
             this.barButtonItem1,
-            this.addSpendingButton});
+            this.addSpendingButton,
+            this.loadSpendingsButton,
+            this.monthlyStatsButton});
             this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl1.MaxItemId = 10;
+            this.ribbonControl1.MaxItemId = 12;
             this.ribbonControl1.Name = "ribbonControl1";
             this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.spendingRibbonPage,
@@ -126,6 +133,24 @@
             this.addSpendingButton.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
             this.addSpendingButton.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.addSpendingButton_ItemClick);
             // 
+            // loadSpendingsButton
+            // 
+            this.loadSpendingsButton.Caption = "Load Spendings";
+            this.loadSpendingsButton.Glyph = ((System.Drawing.Image)(resources.GetObject("loadSpendingsButton.Glyph")));
+            this.loadSpendingsButton.Id = 10;
+            this.loadSpendingsButton.Name = "loadSpendingsButton";
+            this.loadSpendingsButton.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            this.loadSpendingsButton.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.loadSpendingsButton_ItemClick);
+            // 
+            // monthlyStatsButton
+            // 
+            this.monthlyStatsButton.Caption = "Monthly Statistics";
+            this.monthlyStatsButton.Glyph = ((System.Drawing.Image)(resources.GetObject("monthlyStatsButton.Glyph")));
+            this.monthlyStatsButton.Id = 11;
+            this.monthlyStatsButton.Name = "monthlyStatsButton";
+            this.monthlyStatsButton.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            this.monthlyStatsButton.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.monthlyStatsButton_ItemClick);
+            // 
             // spendingRibbonPage
             // 
             this.spendingRibbonPage.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -145,6 +170,7 @@
             // 
             // viewSpending
             // 
+            this.viewSpending.ItemLinks.Add(this.loadSpendingsButton);
             this.viewSpending.ItemLinks.Add(this.addSpendingButton);
             this.viewSpending.ItemLinks.Add(this.spendingButton);
             this.viewSpending.Name = "viewSpending";
@@ -156,8 +182,15 @@
             // 
             // statisticsPage
             // 
+            this.statisticsPage.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
+            this.statsMonthly});
             this.statisticsPage.Name = "statisticsPage";
             this.statisticsPage.Text = "Statistics";
+            // 
+            // statsMonthly
+            // 
+            this.statsMonthly.ItemLinks.Add(this.monthlyStatsButton);
+            this.statsMonthly.Name = "statsMonthly";
             // 
             // usersPage
             // 
@@ -175,8 +208,9 @@
             // 
             this.statusStrip1.Items.AddRange(new System.Windows.Forms.ToolStripItem[] {
             this.toolStripStatusLabel,
-            this.toolStripStatusLoad});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 363);
+            this.toolStripStatusLoad,
+            this.toolStripStatusLoadSpending});
+            this.statusStrip1.Location = new System.Drawing.Point(0, 506);
             this.statusStrip1.Name = "statusStrip1";
             this.statusStrip1.Size = new System.Drawing.Size(758, 22);
             this.statusStrip1.TabIndex = 2;
@@ -192,16 +226,27 @@
             this.toolStripStatusLoad.Name = "toolStripStatusLoad";
             this.toolStripStatusLoad.Size = new System.Drawing.Size(0, 17);
             // 
-            // backgroundWorker
+            // toolStripStatusLoadSpending
             // 
-            this.backgroundWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundWorker_DoWork);
+            this.toolStripStatusLoadSpending.Name = "toolStripStatusLoadSpending";
+            this.toolStripStatusLoadSpending.Size = new System.Drawing.Size(0, 17);
+            // 
+            // backgroundItemWorker
+            // 
+            this.backgroundItemWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundItemWorker_DoWork);
+            this.backgroundItemWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundItemWorker_RunWorkerCompleted);
+            // 
+            // backgroundSpendingWorker
+            // 
+            this.backgroundSpendingWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundSpendingWorker_DoWork);
+            this.backgroundSpendingWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundSpendingWorker_RunWorkerCompleted);
             // 
             // MainForm
             // 
             this.AllowFormGlass = DevExpress.Utils.DefaultBoolean.False;
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(758, 385);
+            this.ClientSize = new System.Drawing.Size(758, 528);
             this.Controls.Add(this.statusStrip1);
             this.Controls.Add(this.ribbonControl1);
             this.IsMdiContainer = true;
@@ -234,9 +279,14 @@
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
         private DevExpress.XtraBars.BarButtonItem barButtonItem1;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup usersRibbonGroup;
-        private System.ComponentModel.BackgroundWorker backgroundWorker;
+        private System.ComponentModel.BackgroundWorker backgroundItemWorker;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLoad;
         private DevExpress.XtraBars.BarButtonItem addSpendingButton;
+        private DevExpress.XtraBars.BarButtonItem loadSpendingsButton;
+        private System.ComponentModel.BackgroundWorker backgroundSpendingWorker;
+        private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLoadSpending;
+        private DevExpress.XtraBars.BarButtonItem monthlyStatsButton;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup statsMonthly;
     }
 }
 

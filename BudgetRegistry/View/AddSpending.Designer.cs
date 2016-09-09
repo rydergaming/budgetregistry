@@ -41,17 +41,24 @@
             // 
             // spendingNameTextBox
             // 
+            this.spendingNameTextBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.spendingNameTextBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.spendingNameTextBox.Location = new System.Drawing.Point(143, 12);
             this.spendingNameTextBox.Name = "spendingNameTextBox";
             this.spendingNameTextBox.Size = new System.Drawing.Size(310, 20);
             this.spendingNameTextBox.TabIndex = 0;
+            this.spendingNameTextBox.TextChanged += new System.EventHandler(this.spendingNameTextBox_TextChanged);
             // 
             // categoryTextBox
             // 
+            this.categoryTextBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.categoryTextBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.categoryTextBox.Location = new System.Drawing.Point(143, 51);
             this.categoryTextBox.Name = "categoryTextBox";
             this.categoryTextBox.Size = new System.Drawing.Size(310, 20);
             this.categoryTextBox.TabIndex = 1;
+            this.categoryTextBox.Text = "Default";
+            this.categoryTextBox.TextChanged += new System.EventHandler(this.categoryTextBox_TextChanged);
             // 
             // numericUpDown
             // 

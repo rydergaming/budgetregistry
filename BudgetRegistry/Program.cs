@@ -13,7 +13,7 @@ namespace BudgetRegistry
     static class Program
     {
         public static IContainer container;
-        public static Context _myContext = new Context();
+        //public static Context _myContext = new Context();
         /// <summary>
         /// The main entry point for the application.
         /// </summary>
@@ -26,6 +26,7 @@ namespace BudgetRegistry
             builder.RegisterType<ViewSpendings>().Named<Form>("ViewSpendings").InstancePerLifetimeScope();
             builder.RegisterType<AddSpendingItemForm>().Named<Form>("AddSpendingItemForm").InstancePerLifetimeScope();
             builder.RegisterType<AddSpending>().Named<Form>("AddSpending").InstancePerLifetimeScope();
+            builder.RegisterType<MonthlyStats>().Named<Form>("MonthlyStats").InstancePerLifetimeScope();
             builder.RegisterType<LoginForm>().AsSelf().InstancePerLifetimeScope();
 
             container = builder.Build();

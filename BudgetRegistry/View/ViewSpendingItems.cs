@@ -11,9 +11,10 @@ using System.Windows.Forms;
 
 namespace BudgetRegistry.View
 {
+
     public partial class ViewSpendingItems : Form
     {
-        
+        Context context = new Context();
         public ViewSpendingItems()
         {
             InitializeComponent();
@@ -21,13 +22,13 @@ namespace BudgetRegistry.View
 
         public void refresh()
         {
-            spendingGrid.DataSource = Program._myContext.SpendingItems.ToList();
+            spendingGrid.DataSource = context.SpendingItems.ToList();
             
         }
 
         private void ViewSpendingItems_Load(object sender, EventArgs e)
         {
-            spendingGrid.DataSource = Program._myContext.SpendingItems.ToList();
+            spendingGrid.DataSource = context.SpendingItems.ToList();
             //spendingGrid.DataSource = spendingItemSource.DataSource;
         }
     }

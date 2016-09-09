@@ -15,7 +15,7 @@ namespace BudgetRegistry.View
     {
         UserModel _user;
         Context context = new Context();
-        List<ViewedSpendingModel> list = new List<ViewedSpendingModel>();
+        List<ViewedSpendingModel> list;
         public ViewSpendings()
         {
             InitializeComponent();
@@ -35,7 +35,7 @@ namespace BudgetRegistry.View
             _user = form.CurrentUser;
             if (_user.UserName != "admin")
             {
-                dataGridView1.Columns[2].Visible = false;
+                dataGridView1.Columns[3].Visible = false;
                 toolStripStatusLabel.Text = "Logged in as " + _user.UserName +
                 " | Only showing His/Her spendings. Log in as admin to show all spendings.";
             }
@@ -44,37 +44,43 @@ namespace BudgetRegistry.View
                 toolStripStatusLabel.Text = "Logged in as " + _user.UserName +
                 " | Showing all spendings.";
             }
-            var spendingList = context.Spendings.ToList();
-            var spendingItemList = context.SpendingItems.ToList();
-            var categoryList = context.Categroies.ToList();
+            refresh();
 
-            //REWORK THIS, STEVE!
-            foreach(var item in spendingList)
+        }
+
+        public void refresh()
+        {
+            if (!autoRefreshCheckBox.Checked) return;
+
+            //list.Clear();
+            refreshList();
+            //dataGridView1.DataSource = list;
+        }
+
+
+        //Make this async pls
+        private void refreshList()
+        {
+            var spendingList = context.Spendings.ToList();
+
+
+            
+            foreach (var item in spendingList)
             {
-                foreach(var spendingItem in spendingItemList)
-                {
-                    foreach(var categoryItem in categoryList)
-                    {
-                        if (item.SpendingItemId == spendingItem.Id)
-                            if (spendingItem.CategoryId == categoryItem.Id)
-                            {
-                                var user = context.Users.Where(u => u.Id == item.UserId).FirstOrDefault();
-                                ViewedSpendingModel vsm = new ViewedSpendingModel
-                                {
-                                    Id = item.Id,
-                                    AddTime = item.CreatedTime,
-                                    CategoryName = categoryItem.Name,
-                                    ItemName = spendingItem.Name,
-                                    Value = spendingItem.LastValue,
-                                    UserName = user.UserName
-                                };
-                                list.Add(vsm);
-                            }
-                    }
-                }
+                var spendingItem = context.SpendingItems.Where(s => s.Id == item.SpendingItemId).FirstOrDefault();
+                var category = context.Categroies.Where(c => c.Id == spendingItem.CategoryId).FirstOrDefault();
+                var user = context.Users.Where(u => u.Id == item.UserId).FirstOrDefault();
+                dataGridView1.Rows.Add(item.Id, spendingItem.Name, category.Name, user.UserName, item.Value, item.CreatedTime);
+                dataGridView1.Refresh();
 
             }
-            dataGridView1.DataSource = list;
+        }
+
+        private void refeshButton_Click(object sender, EventArgs e)
+        {
+            dataGridView1.Rows.Clear();
+            refreshList();
+            
         }
     }
 }

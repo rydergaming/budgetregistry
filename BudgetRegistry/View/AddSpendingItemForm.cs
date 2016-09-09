@@ -15,6 +15,7 @@ namespace BudgetRegistry.View
     public partial class AddSpendingItemForm : Form
     {
         List<String> nameList;
+        List<String> categoryList;
         Context _myContext = new Context();
         public AddSpendingItemForm()
         {
@@ -32,7 +33,7 @@ namespace BudgetRegistry.View
 
         private void itemCategoryTextBox_TextChanged(object sender, EventArgs e)
         {
-            nameList = _myContext.Categroies
+            categoryList = _myContext.Categroies
                 .Where(n => n.Name.Contains(itemCategoryTextBox.Text))
                 .Select(s => s.Name).ToList();
             itemCategoryTextBox.AutoCompleteCustomSource.AddRange(nameList.ToArray());
@@ -59,7 +60,7 @@ namespace BudgetRegistry.View
                     }
                     category = Reusable.CheckCategory(itemCategoryTextBox.Text);
 
-                    var item = Reusable.CheckSpendingItem(itemNameTextBox.Text);
+                    var item = _myContext.SpendingItems.Where(i => i.Name == name).FirstOrDefault();
                         
                     item.LastValue = (int)numericUpDown.Value;
                     item.CategoryId = category.Id;
