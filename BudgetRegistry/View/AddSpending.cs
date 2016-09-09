@@ -72,9 +72,13 @@ namespace BudgetRegistry.View
             });
             context.SaveChanges();
             MessageBox.Show("Spending successfully saved!");
+            spendingNameTextBox.Text = "";
+            categoryTextBox.Text = "";
+            numericUpDown.Value = 0;
             ViewSpendings form = (ViewSpendings)Reusable.GetForm("BudgetRegistry.View.ViewSpendings");
-            form.refresh();
-            this.Close();
+            if (form != null)
+                form.refresh();
+
 
         }
 

@@ -27,7 +27,7 @@ namespace BudgetRegistry.View
         private void initStats()
         {
             _stats = new List<Stats>();
-            for (int i= (int)yearUpDown.Minimum; i<=(int)yearUpDown.Maximum; i++)
+            for (int i=1950; i<=2030; i++)
             {
                 _stats.Add(new Stats
                 {
@@ -49,8 +49,8 @@ namespace BudgetRegistry.View
 
         private void allTimeDataGrid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
-            if (allTimeDataGrid.CurrentRow == null) return;
-            int tmp = allTimeDataGrid.CurrentRow.Index + (int)yearUpDown.Minimum;
+            //if (allTimeDataGrid.CurrentRow == null) return;
+            int tmp = allTimeDataGrid.CurrentRow.Index + 1950;
             MessageBox.Show(tmp.ToString());
             var monthlySpendings = _allTimeSpendings
                 .Where(m => m.CreatedTime.Year == tmp).ToList();

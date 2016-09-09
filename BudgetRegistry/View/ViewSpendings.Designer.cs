@@ -30,22 +30,28 @@
         {
             this.components = new System.ComponentModel.Container();
             this.dataGridView1 = new System.Windows.Forms.DataGridView();
-            this.statusStrip = new System.Windows.Forms.StatusStrip();
-            this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
-            this.userModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.autoRefreshCheckBox = new System.Windows.Forms.CheckBox();
-            this.refeshButton = new System.Windows.Forms.Button();
-            this.viewedSpendingModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Category = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.UserName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Value = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Date = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.statusStrip = new System.Windows.Forms.StatusStrip();
+            this.toolStripStatusLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.autoRefreshCheckBox = new System.Windows.Forms.CheckBox();
+            this.refeshButton = new System.Windows.Forms.Button();
+            this.userModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.viewedSpendingModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.label1 = new System.Windows.Forms.Label();
+            this.yearUpDown = new System.Windows.Forms.NumericUpDown();
+            this.label2 = new System.Windows.Forms.Label();
+            this.monthUpDown = new System.Windows.Forms.NumericUpDown();
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.userModelBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.viewedSpendingModelBindingSource)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.yearUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.monthUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // dataGridView1
@@ -67,6 +73,42 @@
             this.dataGridView1.ReadOnly = true;
             this.dataGridView1.Size = new System.Drawing.Size(623, 256);
             this.dataGridView1.TabIndex = 0;
+            // 
+            // Id
+            // 
+            this.Id.HeaderText = "Id";
+            this.Id.Name = "Id";
+            this.Id.ReadOnly = true;
+            // 
+            // Name
+            // 
+            this.Name.HeaderText = "Item Name";
+            this.Name.Name = "Name";
+            this.Name.ReadOnly = true;
+            // 
+            // Category
+            // 
+            this.Category.HeaderText = "Category";
+            this.Category.Name = "Category";
+            this.Category.ReadOnly = true;
+            // 
+            // UserName
+            // 
+            this.UserName.HeaderText = "User Name";
+            this.UserName.Name = "UserName";
+            this.UserName.ReadOnly = true;
+            // 
+            // Value
+            // 
+            this.Value.HeaderText = "Value";
+            this.Value.Name = "Value";
+            this.Value.ReadOnly = true;
+            // 
+            // Date
+            // 
+            this.Date.HeaderText = "Date Added";
+            this.Date.Name = "Date";
+            this.Date.ReadOnly = true;
             // 
             // statusStrip
             // 
@@ -110,47 +152,77 @@
             // 
             this.viewedSpendingModelBindingSource.DataSource = typeof(BudgetRegistry.Model.ViewedSpendingModel);
             // 
-            // Id
+            // label1
             // 
-            this.Id.HeaderText = "Id";
-            this.Id.Name = "Id";
-            this.Id.ReadOnly = true;
+            this.label1.AutoSize = true;
+            this.label1.Location = new System.Drawing.Point(12, 11);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(29, 13);
+            this.label1.TabIndex = 4;
+            this.label1.Text = "Year";
             // 
-            // Name
+            // yearUpDown
             // 
-            this.Name.HeaderText = "Item Name";
-            this.Name.Name = "Name";
-            this.Name.ReadOnly = true;
+            this.yearUpDown.Location = new System.Drawing.Point(47, 9);
+            this.yearUpDown.Maximum = new decimal(new int[] {
+            2030,
+            0,
+            0,
+            0});
+            this.yearUpDown.Minimum = new decimal(new int[] {
+            1950,
+            0,
+            0,
+            0});
+            this.yearUpDown.Name = "yearUpDown";
+            this.yearUpDown.Size = new System.Drawing.Size(66, 20);
+            this.yearUpDown.TabIndex = 5;
+            this.yearUpDown.Value = new decimal(new int[] {
+            2016,
+            0,
+            0,
+            0});
             // 
-            // Category
+            // label2
             // 
-            this.Category.HeaderText = "Category";
-            this.Category.Name = "Category";
-            this.Category.ReadOnly = true;
+            this.label2.AutoSize = true;
+            this.label2.Location = new System.Drawing.Point(119, 11);
+            this.label2.Name = "label2";
+            this.label2.Size = new System.Drawing.Size(37, 13);
+            this.label2.TabIndex = 6;
+            this.label2.Text = "Month";
             // 
-            // UserName
+            // monthUpDown
             // 
-            this.UserName.HeaderText = "User Name";
-            this.UserName.Name = "UserName";
-            this.UserName.ReadOnly = true;
-            // 
-            // Value
-            // 
-            this.Value.HeaderText = "Value";
-            this.Value.Name = "Value";
-            this.Value.ReadOnly = true;
-            // 
-            // Date
-            // 
-            this.Date.HeaderText = "Date Added";
-            this.Date.Name = "Date";
-            this.Date.ReadOnly = true;
+            this.monthUpDown.Location = new System.Drawing.Point(162, 9);
+            this.monthUpDown.Maximum = new decimal(new int[] {
+            12,
+            0,
+            0,
+            0});
+            this.monthUpDown.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.monthUpDown.Name = "monthUpDown";
+            this.monthUpDown.Size = new System.Drawing.Size(54, 20);
+            this.monthUpDown.TabIndex = 7;
+            this.monthUpDown.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
             // 
             // ViewSpendings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(623, 298);
+            this.Controls.Add(this.monthUpDown);
+            this.Controls.Add(this.label2);
+            this.Controls.Add(this.yearUpDown);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.refeshButton);
             this.Controls.Add(this.autoRefreshCheckBox);
             this.Controls.Add(this.statusStrip);
@@ -163,6 +235,8 @@
             this.statusStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.userModelBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.viewedSpendingModelBindingSource)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.yearUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.monthUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -183,5 +257,9 @@
         private System.Windows.Forms.DataGridViewTextBoxColumn UserName;
         private System.Windows.Forms.DataGridViewTextBoxColumn Value;
         private System.Windows.Forms.DataGridViewTextBoxColumn Date;
+        private System.Windows.Forms.Label label1;
+        private System.Windows.Forms.NumericUpDown yearUpDown;
+        private System.Windows.Forms.Label label2;
+        private System.Windows.Forms.NumericUpDown monthUpDown;
     }
 }

@@ -15,7 +15,7 @@ namespace BudgetRegistry.View
     {
         UserModel _user;
         Context context = new Context();
-        List<ViewedSpendingModel> list;
+        //List<ViewedSpendingModel> list;
         public ViewSpendings()
         {
             InitializeComponent();
@@ -44,7 +44,8 @@ namespace BudgetRegistry.View
                 toolStripStatusLabel.Text = "Logged in as " + _user.UserName +
                 " | Showing all spendings.";
             }
-            refresh();
+            monthUpDown.Value = DateTime.Now.Month;
+            refreshList();
 
         }
 
@@ -61,7 +62,8 @@ namespace BudgetRegistry.View
         //Make this async pls
         private void refreshList()
         {
-            var spendingList = context.Spendings.ToList();
+            var spendingList = context.Spendings
+                .Where(m => m.CreatedTime.Year == yearUpDown.Value && m.CreatedTime.Month == monthUpDown.Value).ToList();
 
 
             
