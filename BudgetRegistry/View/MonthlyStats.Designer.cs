@@ -47,7 +47,8 @@
             this.monthlyStatGrid.Name = "monthlyStatGrid";
             this.monthlyStatGrid.Size = new System.Drawing.Size(638, 146);
             this.monthlyStatGrid.TabIndex = 0;
-            this.monthlyStatGrid.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.monthlyStatGrid_RowEnter);
+            this.monthlyStatGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.monthlyStatGrid_CellClick);
+            //this.monthlyStatGrid.RowEnter += new System.Windows.Forms.DataGridViewCellEventHandler(this.monthlyStatGrid_RowEnter);
             // 
             // monthCategoryGrid
             // 

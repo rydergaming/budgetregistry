@@ -3,6 +3,7 @@ using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Data.Entity;
 using System.Drawing;
 using System.Linq;
 using System.Text;
@@ -17,9 +18,11 @@ namespace BudgetRegistry.View
     {
         UserModel _user;
         List<Stats> _stats = new List<Stats>();
+        List<Stats> _categoryStats = new List<Stats>();
         Context _myContext = new Context();
-        List<SpendingModel> yearlySpendings;
-        List<SpendingModel> monthlySpendings;
+        IQueryable<SpendingModel> _yearlySpendings;
+        Context _yearlyContext;
+        //List<SpendingModel> monthlySpendings;
         public MonthlyStats()
         {
             InitializeComponent();
@@ -36,10 +39,11 @@ namespace BudgetRegistry.View
         {
             MainForm form = (MainForm)Reusable.GetForm("BudgetRegistry.MainForm");
             _user = form.CurrentUser;
-            yearlySpendings = _myContext.Spendings.Where(m => m.CreatedTime.Year == (int)yearNumericUpDown.Value).ToList();
+            _yearlySpendings = _myContext.Spendings.Where(m => m.CreatedTime.Year == (int)yearNumericUpDown.Value);
+
             foreach(var item in _stats)
             {
-                foreach(var spending in yearlySpendings)
+                foreach(var spending in _yearlySpendings)
                 {
                     if (spending.CreatedTime.Month == item.Id)
                         item.TotalSpending += spending.Value;
@@ -47,15 +51,53 @@ namespace BudgetRegistry.View
 
             }
             monthlyStatGrid.DataSource = _stats;
+            monthlyStatGrid.Columns[1].Visible = false;
         }
 
-        private void monthlyStatGrid_RowEnter(object sender, DataGridViewCellEventArgs e)
+        private void monthlyStatGrid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             if (monthlyStatGrid.CurrentRow == null) return;
-            MessageBox.Show("I'm Here");
-            yearlySpendings = _myContext.Spendings.Where(m => m.CreatedTime.Year == (int)yearNumericUpDown.Value).ToList();
-            monthlySpendings = yearlySpendings.Where(m => m.CreatedTime.Month == monthlyStatGrid.CurrentRow.Index).ToList();
-            monthCategoryGrid.DataSource = monthlySpendings;
+
+            var monthlySpendings = _yearlySpendings.Where(m => m.CreatedTime.Month == monthlyStatGrid.CurrentRow.Index+1).ToList();
+            List<SpendingItemModel> monthlySpendingItems = new List<SpendingItemModel>();
+
+            foreach(var item in monthlySpendings)
+            {
+                monthlySpendingItems.Add(_myContext.SpendingItems.Where(m => m.Id == item.SpendingItemId).FirstOrDefault());
+            }
+            List<CategoryModel> monthlyCategories = new List<CategoryModel>();
+
+            foreach (var item in monthlySpendingItems)
+            {
+                monthlyCategories.Add(_myContext.Categroies.Where(m => m.Id == item.CategoryId).FirstOrDefault());
+            }
+            monthlyCategories = monthlyCategories.Distinct().ToList();
+            List<Stats> monthlyStats = new List<Stats>();
+            foreach(var category in monthlyCategories)
+            {
+                monthlyStats.Add(new Stats
+                {
+                    Id = category.Id,
+                    Name = category.Name
+                });
+            }
+            foreach(var category in monthlyCategories)
+            {
+                Console.WriteLine(DateTime.Now.ToString());
+                foreach (var categoryItems in monthlySpendingItems)
+                {
+                    SpendingModel tmpSpendingModel = monthlySpendings
+                        .Where(m =>
+                        m.SpendingItemId == categoryItems.Id && categoryItems.CategoryId == category.Id)
+                        .FirstOrDefault();
+                    if (tmpSpendingModel != null)
+                        monthlyStats.Find(m => m.Id == category.Id).TotalSpending += tmpSpendingModel.Value;
+                    
+                }
+                
+            }
+
+            monthCategoryGrid.DataSource = monthlyStats;
             monthCategoryGrid.Refresh();
         }
     }
@@ -63,6 +105,7 @@ namespace BudgetRegistry.View
     class Stats
     {
         public int Id { get; set; }
+        public string Name { get; set; }
         public int TotalIncome { get; set; }
         public int TotalSpending { get; set; }
         public int Difference { get; set; }
