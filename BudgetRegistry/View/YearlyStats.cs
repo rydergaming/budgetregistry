@@ -45,17 +45,20 @@ namespace BudgetRegistry.View
 
             allTimeDataGrid.DataSource = _stats;
             allTimeDataGrid.Columns[1].Visible = false;
+            allTimeDataGrid.Columns[5].Visible = false;
+            allTimeDataGrid.Columns[6].Visible = false;
         }
 
         private void allTimeDataGrid_CellClick(object sender, DataGridViewCellEventArgs e)
         {
             //if (allTimeDataGrid.CurrentRow == null) return;
             int tmp = allTimeDataGrid.CurrentRow.Index + 1950;
-            MessageBox.Show(tmp.ToString());
             var monthlySpendings = _allTimeSpendings
                 .Where(m => m.CreatedTime.Year == tmp).ToList();
 
             yearlyDataGrid.DataSource = (IBindingList)Reusable.CategoryStats(monthlySpendings);
+
+            Reusable.PercentStats(yearlyDataGrid);
         }
     }
 }

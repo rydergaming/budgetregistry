@@ -36,6 +36,8 @@ namespace BudgetRegistry.View
 
             monthlyStatGrid.DataSource = _stats;
             monthlyStatGrid.Columns[1].Visible = false;
+            monthlyStatGrid.Columns[5].Visible = false;
+            monthlyStatGrid.Columns[6].Visible = false;
         }
 
         private void monthlyStatGrid_CellClick(object sender, DataGridViewCellEventArgs e)
@@ -46,6 +48,7 @@ namespace BudgetRegistry.View
 
             monthCategoryGrid.DataSource = (IBindingList)Reusable.CategoryStats(monthlySpendings);
 
+            Reusable.PercentStats(monthCategoryGrid);
         }
 
         private void yearNumericUpDown_ValueChanged(object sender, EventArgs e)

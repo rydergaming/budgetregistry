@@ -103,7 +103,23 @@ namespace BudgetRegistry.Model
             }
             return new BindingList<Stats>(monthlyStats);
         }
+        public static void PercentStats(DataGridView dataGrid)
+        {
+            double totalSpending = 0;
+            foreach (DataGridViewRow row in dataGrid.Rows)
+            {
+                totalSpending += (int?)row.Cells[3].Value ?? 0;
+            }
+            if (totalSpending != 0)
+                foreach (DataGridViewRow row in dataGrid.Rows)
+                {
 
+                    var percent = (((int?)row.Cells[3].Value ?? 0) * 100D) / totalSpending;
+                    percent = Math.Round(percent, 4);
+                    row.Cells[5].Value = percent.ToString() + "%";
+                }
+        }
+        
         public class Stats
         {
             public int Id { get; set; }
@@ -111,6 +127,8 @@ namespace BudgetRegistry.Model
             public int TotalIncome { get; set; }
             public int TotalSpending { get; set; }
             public int Difference { get; set; }
+            public string SpendingPercent { get; set; }
+            public string IncomePercent { get; set; }
         }
     }
 }
