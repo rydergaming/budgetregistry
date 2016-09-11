@@ -11,15 +11,15 @@ namespace BudgetRegistry.Model
     public static class Reusable
     {
         static Context _myContext = new Context();
-        public static CategoryModel CheckCategory(string name)
+        public static CategoryModel CheckCategory(Context context, string name)
         {
-            Context context = new Context();
+            //Context context = new Context();
             return context.Categroies.Where(c => c.Name == name).FirstOrDefault();
         }
 
-        public static SpendingItemModel CheckSpendingItem(string name)
+        public static SpendingItemModel CheckSpendingItem(Context context,string name)
         {
-            Context context = new Context();
+            //Context context = new Context();
             return context.SpendingItems.Where(c => c.Name == name).FirstOrDefault();
         }
 

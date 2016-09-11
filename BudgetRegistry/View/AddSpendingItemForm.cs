@@ -25,7 +25,8 @@ namespace BudgetRegistry.View
 
         private void itemNameTextBox_TextChanged(object sender, EventArgs e)
         {
-            nameList = _myContext.SpendingItems
+            Context context = new Context();
+            nameList = context.SpendingItems
                 .Where(n => n.Name.Contains(itemNameTextBox.Text))
                 .Select(s => s.Name).ToList();
             itemNameTextBox.AutoCompleteCustomSource.AddRange(nameList.ToArray());
@@ -33,7 +34,8 @@ namespace BudgetRegistry.View
 
         private void itemCategoryTextBox_TextChanged(object sender, EventArgs e)
         {
-            categoryList = _myContext.Categroies
+            Context context = new Context();
+            categoryList = context.Categroies
                 .Where(n => n.Name.Contains(itemCategoryTextBox.Text))
                 .Select(s => s.Name).ToList();
             itemCategoryTextBox.AutoCompleteCustomSource.AddRange(nameList.ToArray());
@@ -41,9 +43,14 @@ namespace BudgetRegistry.View
 
         private void addItemButton_Click(object sender, EventArgs e)
         {
-            var name = Reusable.CheckSpendingItem(itemNameTextBox.Text).Name;
+            if (itemCategoryTextBox.Text == "" || itemCategoryTextBox.Text == "")
+            {
+                MessageBox.Show("Item Name and Category cannot be empty!");
+                return;
+            }
+            var name = Reusable.CheckSpendingItem(_myContext, itemNameTextBox.Text).Name;
 
-            var category = Reusable.CheckCategory(itemCategoryTextBox.Text);
+            var category = Reusable.CheckCategory(_myContext, itemCategoryTextBox.Text);
 
             if (name != null)
             {
@@ -53,20 +60,19 @@ namespace BudgetRegistry.View
                     {
                         _myContext.Categroies.Add(new CategoryModel
                         {
-                            Name = itemNameTextBox.Text
+                            Name = itemCategoryTextBox.Text
                         });
 
                         _myContext.SaveChanges();
                     }
-                    category = Reusable.CheckCategory(itemCategoryTextBox.Text);
+                    category = Reusable.CheckCategory(_myContext, itemCategoryTextBox.Text);
 
                     var item = _myContext.SpendingItems.Where(i => i.Name == name).FirstOrDefault();
                         
                     item.LastValue = (int)numericUpDown.Value;
                     item.CategoryId = category.Id;
                     _myContext.SaveChanges();
-                    DialogResult = DialogResult.OK;
-                    RefreshViewForm();
+                    DialogResult = DialogResult.OK;                    
                     this.Close();
                 }
 
@@ -77,12 +83,12 @@ namespace BudgetRegistry.View
                 {
                     _myContext.Categroies.Add(new CategoryModel
                     {
-                        Name = itemNameTextBox.Text
+                        Name = itemCategoryTextBox.Text
                     });
 
                     _myContext.SaveChanges();
                 }
-                category = Reusable.CheckCategory(itemCategoryTextBox.Text);
+                category = Reusable.CheckCategory(_myContext, itemCategoryTextBox.Text);
 
                 _myContext.SpendingItems.Add(
                     new SpendingItemModel
@@ -93,14 +99,15 @@ namespace BudgetRegistry.View
                     });
                 _myContext.SaveChanges();
                 DialogResult = DialogResult.OK;
-                RefreshViewForm();
                 this.Close();
             }
+            RefreshViewForm();
         }
         private void RefreshViewForm()
         {
             ViewSpendingItems form = (ViewSpendingItems)Reusable.GetForm("BudgetRegistry.View.ViewSpendingItems");
-            form.refresh();
+            if (form !=null)
+                form.refresh();
         }
     }
 }

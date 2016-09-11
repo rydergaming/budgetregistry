@@ -2,6 +2,7 @@
 using BudgetRegistry.Model;
 using BudgetRegistry.View;
 using CsvHelper;
+using CsvHelper.Configuration;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -47,33 +48,10 @@ namespace BudgetRegistry
                 }
                 else
                 {
-                    Close();
+                    Application.Exit();
                 }
             }
             OpenForm("ViewSpendingItems");
-        }
-
-        private void barButtonItem1_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
-        {
-            using (var lifeTimeScope = Program.container.BeginLifetimeScope())
-            {
-                var form = lifeTimeScope.Resolve<LoginForm>();
-                if (form.ShowDialog() == DialogResult.OK)
-                {
-                    CurrentUser = form.user;
-                    toolStripStatusLabel.Text = "Logged in as " + CurrentUser.UserName;
-                    for (int i = 0; i < Application.OpenForms.Count - 1; i++)
-                    {
-                        if (Application.OpenForms[i].GetType() != typeof(MainForm))
-                            Application.OpenForms[i].Close();
-                    }
-                }
-                else
-                {
-
-                }
-            }
-
         }
 
         private void loadSpendingItemButton_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -103,6 +81,7 @@ namespace BudgetRegistry
                     return;
                 }
             }
+            
             form.MdiParent = this;
             form.WindowState = FormWindowState.Maximized;
             form.Show();
@@ -140,32 +119,25 @@ namespace BudgetRegistry
 
         private void backgroundItemWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            using (var reader = new StreamReader((string)e.Argument, System.Text.Encoding.Default))
+            using (var streamReader = new StreamReader((string)e.Argument, System.Text.Encoding.Default))
             {
-                string line;
-                int i = 0;
-                reader.ReadLine();
-                while (!reader.EndOfStream)
+                var csvConfig = new CsvConfiguration();
+                csvConfig.Delimiter = ";";
+                csvConfig.HasHeaderRecord = true;
+                var reader = new CsvReader(streamReader,csvConfig);
+                //reader.ReadHeader();
+           
+                while ( reader.Read() )
                 {
-                    i++;
-                    Invoke(new Action(() => toolStripStatusLoad.Text = " | Line: " + i));
+                    Invoke(new Action(() => toolStripStatusLoad.Text = " | Line: " + reader.Row));
                     Invoke(new Action(() =>
                     {
                         ViewSpendingItems form = (ViewSpendingItems)Reusable.GetForm("BudgetRegistry.View.ViewSpendingItems");
                         if (form != null)
                             form.refresh();
                     }));
-                    line = reader.ReadLine();
-                    line = line.Replace("\"", "").Trim();
-                    string[] elements = line.Split(';');
-                    CsvModel item = new CsvModel
-                    {
-                        Id = Int32.Parse(elements[0]),
-                        Name = elements[1],
-                        CategoryName = elements[2],
-                        Value = Int32.Parse(elements[3])
-                    };
-                    var category = _myContext.Categroies.Where(c => c.Name == item.CategoryName).FirstOrDefault();
+                    var item = reader.GetRecord<CsvModel>();
+                    var category = Reusable.CheckCategory(_myContext, item.CategoryName);
 
                     if (category == null)
                     {
@@ -176,7 +148,7 @@ namespace BudgetRegistry
 
                         _myContext.SaveChanges();
                     }
-                    category = _myContext.Categroies.Where(c => c.Name == item.CategoryName).FirstOrDefault();
+                    category = Reusable.CheckCategory(_myContext, item.CategoryName);
 
 
                     var spendItem = _myContext.SpendingItems.Where(s => s.Id == item.Id).FirstOrDefault();
@@ -199,7 +171,7 @@ namespace BudgetRegistry
 
                     }
                 }
-
+                
             }
         }
 
@@ -236,7 +208,7 @@ namespace BudgetRegistry
                         Value = Int32.Parse(elements[3]),
                         AddTime = Convert.ToDateTime(elements[4])
                     };
-                    var category = Reusable.CheckCategory(item.CategoryName);
+                    var category = Reusable.CheckCategory(_myContext, item.CategoryName);
 
                     if (category == null)
                     {
@@ -247,10 +219,10 @@ namespace BudgetRegistry
 
                         _myContext.SaveChanges();
                     }
-                    category = Reusable.CheckCategory(item.CategoryName);
+                    category = Reusable.CheckCategory(_myContext, item.CategoryName);
 
 
-                    var spendItem = Reusable.CheckSpendingItem(item.ItemName);
+                    var spendItem = Reusable.CheckSpendingItem(_myContext, item.ItemName);
                     if (spendItem == null)
                     {
                         _myContext.SpendingItems.Add(new SpendingItemModel
@@ -269,7 +241,7 @@ namespace BudgetRegistry
                         _myContext.SaveChanges();
 
                     }
-                    spendItem = Reusable.CheckSpendingItem(item.ItemName);
+                    spendItem = Reusable.CheckSpendingItem(_myContext, item.ItemName);
 
                     _myContext.Spendings.Add(new SpendingModel
                     {
@@ -297,6 +269,73 @@ namespace BudgetRegistry
         private void yearlyStatsButton_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             OpenForm("YearlyStats");
+        }
+
+        private void loginButton_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            using (var lifeTimeScope = Program.container.BeginLifetimeScope())
+            {
+                var form = lifeTimeScope.Resolve<LoginForm>();
+                if (form.ShowDialog() == DialogResult.OK)
+                {
+                    CurrentUser = form.user;
+                    toolStripStatusLabel.Text = "Logged in as " + CurrentUser.UserName;
+                    for (int i = Application.OpenForms.Count - 1; i >= 0; i--)
+                    {
+                        if (Application.OpenForms[i].GetType() != typeof(MainForm))
+                            Application.OpenForms[i].Close();
+                    }
+                }
+            }
+        }
+
+        private void exportAllSpending_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            using (var save = new SaveFileDialog())
+            {
+            
+                save.Filter = "CSV fajlok|*.csv";
+                if (save.ShowDialog() == DialogResult.OK)
+                {
+                    backgroundExportWorker.RunWorkerAsync(save.FileName);
+                    exportAllSpending.Enabled = false;
+                }
+
+            }            
+        }
+
+        private void backgroundExportWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            using (var writer = new StreamWriter((string)e.Argument))
+            {
+                var csvConfig = new CsvConfiguration();
+                csvConfig.Delimiter = ";";
+                csvConfig.HasHeaderRecord = true;
+                csvConfig.QuoteAllFields = true;
+                var csvWriter = new CsvWriter(writer,csvConfig);
+                List<CsvModel> list = new List<CsvModel>();
+                var spendingList = _myContext.Spendings.ToList();
+                csvWriter.WriteHeader<CsvModel>();
+                foreach (var item in spendingList)
+                {
+                    var spendingItem = _myContext.SpendingItems.Where(s => s.Id == item.SpendingItemId).FirstOrDefault();
+                    var category = _myContext.Categroies.Where(c => c.Id == spendingItem.CategoryId).FirstOrDefault();
+                    csvWriter.WriteRecord(new CsvModel
+                    {
+                        Id = item.Id,
+                        Name = spendingItem.Name,
+                        CategoryName = category.Name,
+                        Value = item.Value,
+                        CreatedDate = item.CreatedTime
+                    });
+                }
+            }
+
+        }
+
+        private void backgroundExportWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            exportAllSpending.Enabled = true;
         }
     }
 }

@@ -34,10 +34,12 @@
             this.addSpendingItem = new DevExpress.XtraBars.BarButtonItem();
             this.spendingItemsButton = new DevExpress.XtraBars.BarButtonItem();
             this.spendingButton = new DevExpress.XtraBars.BarButtonItem();
-            this.barButtonItem1 = new DevExpress.XtraBars.BarButtonItem();
+            this.loginButton = new DevExpress.XtraBars.BarButtonItem();
             this.addSpendingButton = new DevExpress.XtraBars.BarButtonItem();
             this.loadSpendingsButton = new DevExpress.XtraBars.BarButtonItem();
             this.monthlyStatsButton = new DevExpress.XtraBars.BarButtonItem();
+            this.yearlyStatsButton = new DevExpress.XtraBars.BarButtonItem();
+            this.exportAllSpending = new DevExpress.XtraBars.BarButtonItem();
             this.spendingRibbonPage = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.viewSpending = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
@@ -52,7 +54,7 @@
             this.toolStripStatusLoadSpending = new System.Windows.Forms.ToolStripStatusLabel();
             this.backgroundItemWorker = new System.ComponentModel.BackgroundWorker();
             this.backgroundSpendingWorker = new System.ComponentModel.BackgroundWorker();
-            this.yearlyStatsButton = new DevExpress.XtraBars.BarButtonItem();
+            this.backgroundExportWorker = new System.ComponentModel.BackgroundWorker();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -66,13 +68,14 @@
             this.addSpendingItem,
             this.spendingItemsButton,
             this.spendingButton,
-            this.barButtonItem1,
+            this.loginButton,
             this.addSpendingButton,
             this.loadSpendingsButton,
             this.monthlyStatsButton,
-            this.yearlyStatsButton});
+            this.yearlyStatsButton,
+            this.exportAllSpending});
             this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl1.MaxItemId = 13;
+            this.ribbonControl1.MaxItemId = 14;
             this.ribbonControl1.Name = "ribbonControl1";
             this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.spendingRibbonPage,
@@ -117,14 +120,14 @@
             this.spendingButton.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
             this.spendingButton.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.spendingButton_ItemClick);
             // 
-            // barButtonItem1
+            // loginButton
             // 
-            this.barButtonItem1.Caption = "Switch/Add User";
-            this.barButtonItem1.Glyph = ((System.Drawing.Image)(resources.GetObject("barButtonItem1.Glyph")));
-            this.barButtonItem1.Id = 8;
-            this.barButtonItem1.Name = "barButtonItem1";
-            this.barButtonItem1.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
-            this.barButtonItem1.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.barButtonItem1_ItemClick);
+            this.loginButton.Caption = "Switch/Add User";
+            this.loginButton.Glyph = ((System.Drawing.Image)(resources.GetObject("loginButton.Glyph")));
+            this.loginButton.Id = 8;
+            this.loginButton.Name = "loginButton";
+            this.loginButton.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            this.loginButton.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.loginButton_ItemClick);
             // 
             // addSpendingButton
             // 
@@ -153,6 +156,24 @@
             this.monthlyStatsButton.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
             this.monthlyStatsButton.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.monthlyStatsButton_ItemClick);
             // 
+            // yearlyStatsButton
+            // 
+            this.yearlyStatsButton.Caption = "Yearly Statistics";
+            this.yearlyStatsButton.Glyph = ((System.Drawing.Image)(resources.GetObject("yearlyStatsButton.Glyph")));
+            this.yearlyStatsButton.Id = 12;
+            this.yearlyStatsButton.Name = "yearlyStatsButton";
+            this.yearlyStatsButton.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            this.yearlyStatsButton.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.yearlyStatsButton_ItemClick);
+            // 
+            // exportAllSpending
+            // 
+            this.exportAllSpending.Caption = "Export All Spendings";
+            this.exportAllSpending.Glyph = ((System.Drawing.Image)(resources.GetObject("exportAllSpending.Glyph")));
+            this.exportAllSpending.Id = 13;
+            this.exportAllSpending.Name = "exportAllSpending";
+            this.exportAllSpending.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            this.exportAllSpending.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.exportAllSpending_ItemClick);
+            // 
             // spendingRibbonPage
             // 
             this.spendingRibbonPage.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
@@ -175,6 +196,7 @@
             this.viewSpending.ItemLinks.Add(this.loadSpendingsButton);
             this.viewSpending.ItemLinks.Add(this.addSpendingButton);
             this.viewSpending.ItemLinks.Add(this.spendingButton);
+            this.viewSpending.ItemLinks.Add(this.exportAllSpending);
             this.viewSpending.Name = "viewSpending";
             // 
             // incomePage
@@ -204,7 +226,7 @@
             // 
             // usersRibbonGroup
             // 
-            this.usersRibbonGroup.ItemLinks.Add(this.barButtonItem1);
+            this.usersRibbonGroup.ItemLinks.Add(this.loginButton);
             this.usersRibbonGroup.Name = "usersRibbonGroup";
             // 
             // statusStrip1
@@ -244,14 +266,10 @@
             this.backgroundSpendingWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundSpendingWorker_DoWork);
             this.backgroundSpendingWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundSpendingWorker_RunWorkerCompleted);
             // 
-            // yearlyStatsButton
+            // backgroundExportWorker
             // 
-            this.yearlyStatsButton.Caption = "Yearly Statistics";
-            this.yearlyStatsButton.Glyph = ((System.Drawing.Image)(resources.GetObject("yearlyStatsButton.Glyph")));
-            this.yearlyStatsButton.Id = 12;
-            this.yearlyStatsButton.Name = "yearlyStatsButton";
-            this.yearlyStatsButton.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
-            this.yearlyStatsButton.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.yearlyStatsButton_ItemClick);
+            this.backgroundExportWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundExportWorker_DoWork);
+            this.backgroundExportWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundExportWorker_RunWorkerCompleted);
             // 
             // MainForm
             // 
@@ -289,7 +307,7 @@
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup viewSpending;
         private System.Windows.Forms.StatusStrip statusStrip1;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
-        private DevExpress.XtraBars.BarButtonItem barButtonItem1;
+        private DevExpress.XtraBars.BarButtonItem loginButton;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup usersRibbonGroup;
         private System.ComponentModel.BackgroundWorker backgroundItemWorker;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLoad;
@@ -300,6 +318,8 @@
         private DevExpress.XtraBars.BarButtonItem monthlyStatsButton;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup statsMonthly;
         private DevExpress.XtraBars.BarButtonItem yearlyStatsButton;
+        private DevExpress.XtraBars.BarButtonItem exportAllSpending;
+        private System.ComponentModel.BackgroundWorker backgroundExportWorker;
     }
 }
 

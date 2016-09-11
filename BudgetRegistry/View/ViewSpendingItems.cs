@@ -31,5 +31,10 @@ namespace BudgetRegistry.View
             spendingGrid.DataSource = context.SpendingItems.ToList();
             //spendingGrid.DataSource = spendingItemSource.DataSource;
         }
+
+        private void spendingGrid_CellValueChanged(object sender, DataGridViewCellEventArgs e)
+        {
+            context.SaveChanges();
+        }
     }
 }

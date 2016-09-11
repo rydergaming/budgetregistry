@@ -13,7 +13,7 @@ namespace BudgetRegistry.View
 {
     public partial class AddSpending : Form
     {
-        Context context = new Context();
+        Context _myContext = new Context();
         UserModel _user;
         List<String> nameList = new List<string>();
         List<String> categoryList = new List<string>();
@@ -33,44 +33,44 @@ namespace BudgetRegistry.View
                 MessageBox.Show("Spending Name Cannot be empty!");
                 return;
             }
-            var category = Reusable.CheckCategory(categoryTextBox.Text);
+            var category = Reusable.CheckCategory(_myContext, categoryTextBox.Text);
             if (category == null)
             {
-                context.Categroies.Add(new CategoryModel
+                _myContext.Categroies.Add(new CategoryModel
                 {
                     Name = categoryTextBox.Text
                 });
-                context.SaveChanges();
+                _myContext.SaveChanges();
             }
-            category = Reusable.CheckCategory(categoryTextBox.Text);
+            category = Reusable.CheckCategory(_myContext, categoryTextBox.Text);
 
-            var spendingItem = Reusable.CheckSpendingItem(spendingNameTextBox.Text);
+            var spendingItem = Reusable.CheckSpendingItem(_myContext, spendingNameTextBox.Text);
             if (spendingItem == null)
             {
-                context.SpendingItems.Add(new SpendingItemModel
+                _myContext.SpendingItems.Add(new SpendingItemModel
                 {
                     CategoryId = category.Id,
                     Name = spendingNameTextBox.Text,
                     LastValue = (int)numericUpDown.Value
                 });
-                context.SaveChanges();
+                _myContext.SaveChanges();
             }
             else
             {
-                var item = context.SpendingItems.Where(s => s.Name == spendingNameTextBox.Text).FirstOrDefault();
+                var item = _myContext.SpendingItems.Where(s => s.Name == spendingNameTextBox.Text).FirstOrDefault();
                 item.LastValue = (int)numericUpDown.Value;
-                context.SaveChanges();
+                _myContext.SaveChanges();
             }
-            spendingItem = Reusable.CheckSpendingItem(spendingNameTextBox.Text);
+            spendingItem = Reusable.CheckSpendingItem(_myContext, spendingNameTextBox.Text);
 
-            context.Spendings.Add( new SpendingModel
+            _myContext.Spendings.Add( new SpendingModel
             {
                 CreatedTime = dateTimePicker.Value,
                 SpendingItemId = spendingItem.Id,
                 UserId = _user.Id,
                 Value = (int)numericUpDown.Value
             });
-            context.SaveChanges();
+            _myContext.SaveChanges();
             MessageBox.Show("Spending successfully saved!");
             spendingNameTextBox.Text = "";
             categoryTextBox.Text = "";
@@ -84,18 +84,18 @@ namespace BudgetRegistry.View
 
         private void spendingNameTextBox_TextChanged(object sender, EventArgs e)
         {
-            nameList = context.SpendingItems
+            nameList = _myContext.SpendingItems
                 .Where(n => n.Name.Contains(spendingNameTextBox.Text))
                 .Select(s => s.Name).ToList();
             spendingNameTextBox.AutoCompleteCustomSource.AddRange(nameList.ToArray());
-            var item = context.SpendingItems.Where(n => n.Name == spendingNameTextBox.Text).FirstOrDefault();
+            var item = _myContext.SpendingItems.Where(n => n.Name == spendingNameTextBox.Text).FirstOrDefault();
             if (item != null)
                 numericUpDown.Value = item.LastValue;
         }
 
         private void categoryTextBox_TextChanged(object sender, EventArgs e)
         {
-            categoryList = context.SpendingItems
+            categoryList = _myContext.SpendingItems
                 .Where(n => n.Name.Contains(categoryTextBox.Text))
                 .Select(s => s.Name).ToList();
             categoryTextBox.AutoCompleteCustomSource.AddRange(categoryList.ToArray());

@@ -1,9 +1,12 @@
 ﻿using BudgetRegistry.Model;
+using CsvHelper;
+using CsvHelper.Configuration;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -35,7 +38,7 @@ namespace BudgetRegistry.View
             _user = form.CurrentUser;
             if (_user.UserName != "admin")
             {
-                dataGridView1.Columns[3].Visible = false;
+                dataGridView.Columns[3].Visible = false;
                 toolStripStatusLabel.Text = "Logged in as " + _user.UserName +
                 " | Only showing His/Her spendings. Log in as admin to show all spendings.";
             }
@@ -59,7 +62,6 @@ namespace BudgetRegistry.View
         }
 
 
-        //Make this async pls
         private void refreshList()
         {
             var spendingList = context.Spendings
@@ -72,17 +74,60 @@ namespace BudgetRegistry.View
                 var spendingItem = context.SpendingItems.Where(s => s.Id == item.SpendingItemId).FirstOrDefault();
                 var category = context.Categroies.Where(c => c.Id == spendingItem.CategoryId).FirstOrDefault();
                 var user = context.Users.Where(u => u.Id == item.UserId).FirstOrDefault();
-                dataGridView1.Rows.Add(item.Id, spendingItem.Name, category.Name, user.UserName, item.Value, item.CreatedTime);
-                dataGridView1.Refresh();
+                dataGridView.Rows.Add(item.Id, spendingItem.Name, category.Name, user.UserName, item.Value, item.CreatedTime);
+                dataGridView.Refresh();
 
             }
         }
 
         private void refeshButton_Click(object sender, EventArgs e)
         {
-            dataGridView1.Rows.Clear();
+            dataGridView.Rows.Clear();
             refreshList();
             
+        }
+
+        private void exportSpendingsButton_Click(object sender, EventArgs e)
+        {
+            using (var save = new SaveFileDialog())
+            {
+
+                save.Filter = "CSV fajlok|*.csv";
+                if (save.ShowDialog() == DialogResult.OK)
+                {
+                    exportSpendingWorker.RunWorkerAsync(save.FileName);
+                    exportSpendingsButton.Enabled = false;
+                }
+
+            }
+        }
+
+        private void exportSpendingWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            using (var writer = new StreamWriter((string)e.Argument))
+            {
+                var csvConfig = new CsvConfiguration();
+                csvConfig.Delimiter = ";";
+                csvConfig.HasHeaderRecord = true;
+                csvConfig.QuoteAllFields = true;
+                var csvWriter = new CsvWriter(writer, csvConfig);
+                List<CsvModel> list = new List<CsvModel>();
+                //var spendingList = _myContext.Spendings.ToList();
+                csvWriter.WriteHeader<CsvModel>();
+                foreach (DataGridViewRow item in dataGridView.Rows)
+                {
+                   /* var spendingItem = _myContext.SpendingItems.Where(s => s.Id == item.SpendingItemId).FirstOrDefault();
+                    var category = _myContext.Categroies.Where(c => c.Id == spendingItem.CategoryId).FirstOrDefault();*/
+                    csvWriter.WriteRecord(new CsvModel
+                    {
+                        Id = (int)item.Cells[0].Value,
+                        Name = (string)item.Cells[1].Value,
+                        CategoryName = (string)item.Cells[2].Value,
+                        Value = (int)item.Cells[4].Value
+                        
+                    });
+                }
+            }
         }
     }
 }

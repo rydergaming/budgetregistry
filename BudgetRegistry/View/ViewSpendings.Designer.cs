@@ -29,7 +29,7 @@
         private void InitializeComponent()
         {
             this.components = new System.ComponentModel.Container();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dataGridView = new System.Windows.Forms.DataGridView();
             this.Id = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Name = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.Category = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -41,38 +41,40 @@
             this.autoRefreshCheckBox = new System.Windows.Forms.CheckBox();
             this.refeshButton = new System.Windows.Forms.Button();
             this.userModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
-            this.viewedSpendingModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.label1 = new System.Windows.Forms.Label();
             this.yearUpDown = new System.Windows.Forms.NumericUpDown();
             this.label2 = new System.Windows.Forms.Label();
             this.monthUpDown = new System.Windows.Forms.NumericUpDown();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            this.viewedSpendingModelBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            this.exportSpendingsButton = new System.Windows.Forms.Button();
+            this.exportSpendingWorker = new System.ComponentModel.BackgroundWorker();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).BeginInit();
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.userModelBindingSource)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.viewedSpendingModelBindingSource)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.yearUpDown)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.monthUpDown)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.viewedSpendingModelBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
-            // dataGridView1
+            // dataGridView
             // 
-            this.dataGridView1.AllowUserToAddRows = false;
-            this.dataGridView1.AllowUserToDeleteRows = false;
-            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            this.dataGridView.AllowUserToAddRows = false;
+            this.dataGridView.AllowUserToDeleteRows = false;
+            this.dataGridView.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
+            this.dataGridView.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dataGridView.Columns.AddRange(new System.Windows.Forms.DataGridViewColumn[] {
             this.Id,
             this.Name,
             this.Category,
             this.UserName,
             this.Value,
             this.Date});
-            this.dataGridView1.Location = new System.Drawing.Point(0, 36);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.ReadOnly = true;
-            this.dataGridView1.Size = new System.Drawing.Size(623, 256);
-            this.dataGridView1.TabIndex = 0;
+            this.dataGridView.Location = new System.Drawing.Point(0, 36);
+            this.dataGridView.Name = "dataGridView";
+            this.dataGridView.ReadOnly = true;
+            this.dataGridView.Size = new System.Drawing.Size(623, 256);
+            this.dataGridView.TabIndex = 0;
             // 
             // Id
             // 
@@ -131,7 +133,7 @@
             this.autoRefreshCheckBox.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.autoRefreshCheckBox.AutoSize = true;
-            this.autoRefreshCheckBox.Location = new System.Drawing.Point(433, 10);
+            this.autoRefreshCheckBox.Location = new System.Drawing.Point(238, 10);
             this.autoRefreshCheckBox.Name = "autoRefreshCheckBox";
             this.autoRefreshCheckBox.Size = new System.Drawing.Size(88, 17);
             this.autoRefreshCheckBox.TabIndex = 2;
@@ -140,17 +142,13 @@
             // 
             // refeshButton
             // 
-            this.refeshButton.Location = new System.Drawing.Point(536, 6);
+            this.refeshButton.Location = new System.Drawing.Point(332, 6);
             this.refeshButton.Name = "refeshButton";
             this.refeshButton.Size = new System.Drawing.Size(75, 23);
             this.refeshButton.TabIndex = 3;
             this.refeshButton.Text = "Refresh";
             this.refeshButton.UseVisualStyleBackColor = true;
             this.refeshButton.Click += new System.EventHandler(this.refeshButton_Click);
-            // 
-            // viewedSpendingModelBindingSource
-            // 
-            this.viewedSpendingModelBindingSource.DataSource = typeof(BudgetRegistry.Model.ViewedSpendingModel);
             // 
             // label1
             // 
@@ -214,11 +212,30 @@
             0,
             0});
             // 
+            // viewedSpendingModelBindingSource
+            // 
+            this.viewedSpendingModelBindingSource.DataSource = typeof(BudgetRegistry.Model.ViewedSpendingModel);
+            // 
+            // exportSpendingsButton
+            // 
+            this.exportSpendingsButton.Location = new System.Drawing.Point(507, 6);
+            this.exportSpendingsButton.Name = "exportSpendingsButton";
+            this.exportSpendingsButton.Size = new System.Drawing.Size(104, 23);
+            this.exportSpendingsButton.TabIndex = 8;
+            this.exportSpendingsButton.Text = "Export Spendings";
+            this.exportSpendingsButton.UseVisualStyleBackColor = true;
+            this.exportSpendingsButton.Click += new System.EventHandler(this.exportSpendingsButton_Click);
+            // 
+            // exportSpendingWorker
+            // 
+            this.exportSpendingWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.exportSpendingWorker_DoWork);
+            // 
             // ViewSpendings
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(623, 298);
+            this.Controls.Add(this.exportSpendingsButton);
             this.Controls.Add(this.monthUpDown);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.yearUpDown);
@@ -226,17 +243,17 @@
             this.Controls.Add(this.refeshButton);
             this.Controls.Add(this.autoRefreshCheckBox);
             this.Controls.Add(this.statusStrip);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.dataGridView);
             //this.Name = "ViewSpendings";
             this.Text = "ViewSpendings";
             this.Load += new System.EventHandler(this.ViewSpendings_Load);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.userModelBindingSource)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.viewedSpendingModelBindingSource)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.yearUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.monthUpDown)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.viewedSpendingModelBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -244,7 +261,7 @@
 
         #endregion
 
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dataGridView;
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel toolStripStatusLabel;
         private System.Windows.Forms.BindingSource userModelBindingSource;
@@ -261,5 +278,7 @@
         private System.Windows.Forms.NumericUpDown yearUpDown;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.NumericUpDown monthUpDown;
+        private System.Windows.Forms.Button exportSpendingsButton;
+        private System.ComponentModel.BackgroundWorker exportSpendingWorker;
     }
 }
