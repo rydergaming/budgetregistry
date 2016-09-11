@@ -229,6 +229,7 @@
             // exportSpendingWorker
             // 
             this.exportSpendingWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.exportSpendingWorker_DoWork);
+            this.exportSpendingWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.exportSpendingWorker_RunWorkerCompleted);
             // 
             // ViewSpendings
             // 
@@ -244,7 +245,7 @@
             this.Controls.Add(this.autoRefreshCheckBox);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.dataGridView);
-            //this.Name = "ViewSpendings";
+
             this.Text = "ViewSpendings";
             this.Load += new System.EventHandler(this.ViewSpendings_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();

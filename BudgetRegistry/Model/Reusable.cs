@@ -103,6 +103,7 @@ namespace BudgetRegistry.Model
             }
             return new BindingList<Stats>(monthlyStats);
         }
+
         public static void PercentStats(DataGridView dataGrid)
         {
             double totalSpending = 0;

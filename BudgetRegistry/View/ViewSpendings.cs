@@ -64,8 +64,18 @@ namespace BudgetRegistry.View
 
         private void refreshList()
         {
-            var spendingList = context.Spendings
-                .Where(m => m.CreatedTime.Year == yearUpDown.Value && m.CreatedTime.Month == monthUpDown.Value).ToList();
+            List<SpendingModel> spendingList;
+            if (_user.UserName != "admin")
+                spendingList = context.Spendings
+                .Where(m => m.CreatedTime.Year == yearUpDown.Value 
+                && m.CreatedTime.Month == monthUpDown.Value 
+                && m.UserId == _user.Id).ToList();
+            else
+            {
+                spendingList = context.Spendings
+                .Where(m => m.CreatedTime.Year == yearUpDown.Value
+                && m.CreatedTime.Month == monthUpDown.Value).ToList();
+            }
 
 
             
@@ -123,11 +133,17 @@ namespace BudgetRegistry.View
                         Id = (int)item.Cells[0].Value,
                         Name = (string)item.Cells[1].Value,
                         CategoryName = (string)item.Cells[2].Value,
-                        Value = (int)item.Cells[4].Value
-                        
+                        Value = (int)item.Cells[4].Value,
+                        CreatedDate = (DateTime)item.Cells[5].Value
+
                     });
                 }
             }
+        }
+
+        private void exportSpendingWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            exportSpendingsButton.Enabled = true;
         }
     }
 }

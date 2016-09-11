@@ -125,7 +125,6 @@ namespace BudgetRegistry
                 csvConfig.Delimiter = ";";
                 csvConfig.HasHeaderRecord = true;
                 var reader = new CsvReader(streamReader,csvConfig);
-                //reader.ReadHeader();
            
                 while ( reader.Read() )
                 {
@@ -182,31 +181,30 @@ namespace BudgetRegistry
 
         private void backgroundSpendingWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-            using (var reader = new StreamReader((string)e.Argument, System.Text.Encoding.Default))
+            using (var streamReader = new StreamReader((string)e.Argument, System.Text.Encoding.Default))
             {
-                string line;
-                int i = 0;
-                reader.ReadLine();
-                while (!reader.EndOfStream)
+                var csvConfig = new CsvConfiguration();
+                csvConfig.Delimiter = ";";
+                csvConfig.HasHeaderRecord = true;
+                var reader = new CsvReader(streamReader, csvConfig);
+                while ( reader.Read() )
                 {
-                    i++;
-                    Invoke(new Action(() => toolStripStatusLoadSpending.Text = " | Spending Line: " + i));
+
+                    Invoke(new Action(() => toolStripStatusLoadSpending.Text = " | Spending Line: " + reader.Row));
                     Invoke(new Action(() =>
                     {
                         ViewSpendings form = (ViewSpendings)Reusable.GetForm("BudgetRegistry.View.ViewSpendings");
                         if (form != null)
                             form.refresh();
                     }));
-                    line = reader.ReadLine();
-                    line = line.Replace("\"", "").Trim();
-                    string[] elements = line.Split(';');
+                    var csvItem = reader.GetRecord<CsvModel>();
                     ViewedSpendingModel item = new ViewedSpendingModel
                     {
-                        Id = Int32.Parse(elements[0]),
-                        ItemName = elements[1],
-                        CategoryName = elements[2],
-                        Value = Int32.Parse(elements[3]),
-                        AddTime = Convert.ToDateTime(elements[4])
+                        Id = csvItem.Id ?? 0,
+                        ItemName = csvItem.Name,
+                        CategoryName = csvItem.CategoryName,
+                        Value = csvItem.Value,
+                        AddTime = csvItem.CreatedDate
                     };
                     var category = Reusable.CheckCategory(_myContext, item.CategoryName);
 
@@ -235,7 +233,7 @@ namespace BudgetRegistry
                     }
                     else
                     {
-                        spendItem.CategoryId = category.Id;
+                        //spendItem.CategoryId = category.Id;
                         spendItem.LastValue = item.Value;
                         //spendItem.Name = item.Name;
                         _myContext.SaveChanges();
