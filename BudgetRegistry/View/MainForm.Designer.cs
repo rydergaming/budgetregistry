@@ -43,7 +43,6 @@
             this.spendingRibbonPage = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.ribbonPageGroup1 = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.viewSpending = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
-            this.incomePage = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.statisticsPage = new DevExpress.XtraBars.Ribbon.RibbonPage();
             this.statsMonthly = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
             this.usersPage = new DevExpress.XtraBars.Ribbon.RibbonPage();
@@ -55,6 +54,8 @@
             this.backgroundItemWorker = new System.ComponentModel.BackgroundWorker();
             this.backgroundSpendingWorker = new System.ComponentModel.BackgroundWorker();
             this.backgroundExportWorker = new System.ComponentModel.BackgroundWorker();
+            this.IncomeGroup = new DevExpress.XtraBars.Ribbon.RibbonPageGroup();
+            this.addIncome = new DevExpress.XtraBars.BarButtonItem();
             ((System.ComponentModel.ISupportInitialize)(this.ribbonControl1)).BeginInit();
             this.statusStrip1.SuspendLayout();
             this.SuspendLayout();
@@ -73,13 +74,13 @@
             this.loadSpendingsButton,
             this.monthlyStatsButton,
             this.yearlyStatsButton,
-            this.exportAllSpending});
+            this.exportAllSpending,
+            this.addIncome});
             this.ribbonControl1.Location = new System.Drawing.Point(0, 0);
-            this.ribbonControl1.MaxItemId = 14;
+            this.ribbonControl1.MaxItemId = 15;
             this.ribbonControl1.Name = "ribbonControl1";
             this.ribbonControl1.Pages.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPage[] {
             this.spendingRibbonPage,
-            this.incomePage,
             this.statisticsPage,
             this.usersPage});
             this.ribbonControl1.Size = new System.Drawing.Size(758, 143);
@@ -178,7 +179,8 @@
             // 
             this.spendingRibbonPage.Groups.AddRange(new DevExpress.XtraBars.Ribbon.RibbonPageGroup[] {
             this.ribbonPageGroup1,
-            this.viewSpending});
+            this.viewSpending,
+            this.IncomeGroup});
             this.spendingRibbonPage.Name = "spendingRibbonPage";
             this.spendingRibbonPage.Text = "Spending";
             // 
@@ -198,11 +200,6 @@
             this.viewSpending.ItemLinks.Add(this.spendingButton);
             this.viewSpending.ItemLinks.Add(this.exportAllSpending);
             this.viewSpending.Name = "viewSpending";
-            // 
-            // incomePage
-            // 
-            this.incomePage.Name = "incomePage";
-            this.incomePage.Text = "Income";
             // 
             // statisticsPage
             // 
@@ -271,6 +268,20 @@
             this.backgroundExportWorker.DoWork += new System.ComponentModel.DoWorkEventHandler(this.backgroundExportWorker_DoWork);
             this.backgroundExportWorker.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.backgroundExportWorker_RunWorkerCompleted);
             // 
+            // IncomeGroup
+            // 
+            this.IncomeGroup.ItemLinks.Add(this.addIncome);
+            this.IncomeGroup.Name = "IncomeGroup";
+            // 
+            // addIncome
+            // 
+            this.addIncome.Caption = "Add Income";
+            this.addIncome.Glyph = ((System.Drawing.Image)(resources.GetObject("addIncome.Glyph")));
+            this.addIncome.Id = 14;
+            this.addIncome.Name = "addIncome";
+            this.addIncome.RibbonStyle = DevExpress.XtraBars.Ribbon.RibbonItemStyles.Large;
+            this.addIncome.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.addIncome_ItemClick);
+            // 
             // MainForm
             // 
             this.AllowFormGlass = DevExpress.Utils.DefaultBoolean.False;
@@ -299,7 +310,6 @@
         private DevExpress.XtraBars.Ribbon.RibbonPage spendingRibbonPage;
         private DevExpress.XtraBars.Ribbon.RibbonPageGroup ribbonPageGroup1;
         private DevExpress.XtraBars.BarButtonItem addSpendingItem;
-        private DevExpress.XtraBars.Ribbon.RibbonPage incomePage;
         private DevExpress.XtraBars.Ribbon.RibbonPage statisticsPage;
         private DevExpress.XtraBars.Ribbon.RibbonPage usersPage;
         private DevExpress.XtraBars.BarButtonItem spendingItemsButton;
@@ -320,6 +330,8 @@
         private DevExpress.XtraBars.BarButtonItem yearlyStatsButton;
         private DevExpress.XtraBars.BarButtonItem exportAllSpending;
         private System.ComponentModel.BackgroundWorker backgroundExportWorker;
+        private DevExpress.XtraBars.BarButtonItem addIncome;
+        private DevExpress.XtraBars.Ribbon.RibbonPageGroup IncomeGroup;
     }
 }
 

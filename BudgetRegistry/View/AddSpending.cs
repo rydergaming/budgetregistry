@@ -15,14 +15,12 @@ namespace BudgetRegistry.View
     {
         Context _myContext = new Context();
         UserModel _user;
-        List<String> nameList = new List<string>();
-        List<String> categoryList = new List<string>();
 
         public AddSpending()
         {
             InitializeComponent();
             MainForm form = (MainForm)Reusable.GetForm("BudgetRegistry.MainForm");
-            _user = form.CurrentUser;
+                _user = form.CurrentUser;
 
         }
 
@@ -30,9 +28,15 @@ namespace BudgetRegistry.View
         {
             if (spendingNameTextBox.Text == "")
             {
-                MessageBox.Show("Spending Name Cannot be empty!");
+                MessageBox.Show("Spending Name cannot be empty!");
                 return;
             }
+            if (categoryTextBox.Text == "")
+            {
+                MessageBox.Show("Category name is empty. Using default category.");
+                categoryTextBox.Text = "Default";
+            }
+            
             var category = Reusable.CheckCategory(_myContext, categoryTextBox.Text);
             if (category == null)
             {
@@ -57,8 +61,8 @@ namespace BudgetRegistry.View
             }
             else
             {
-                var item = _myContext.SpendingItems.Where(s => s.Name == spendingNameTextBox.Text).FirstOrDefault();
-                item.LastValue = (int)numericUpDown.Value;
+                //var item = _myContext.SpendingItems.Where(s => s.Name == spendingNameTextBox.Text).FirstOrDefault();
+                spendingItem.LastValue = (int)numericUpDown.Value;
                 _myContext.SaveChanges();
             }
             spendingItem = Reusable.CheckSpendingItem(_myContext, spendingNameTextBox.Text);
@@ -78,27 +82,30 @@ namespace BudgetRegistry.View
             ViewSpendings form = (ViewSpendings)Reusable.GetForm("BudgetRegistry.View.ViewSpendings");
             if (form != null)
                 form.refresh();
+            else
+                MessageBox.Show("Form was null");
 
 
         }
 
         private void spendingNameTextBox_TextChanged(object sender, EventArgs e)
         {
-            nameList = _myContext.SpendingItems
-                .Where(n => n.Name.Contains(spendingNameTextBox.Text))
-                .Select(s => s.Name).ToList();
-            spendingNameTextBox.AutoCompleteCustomSource.AddRange(nameList.ToArray());
-            var item = _myContext.SpendingItems.Where(n => n.Name == spendingNameTextBox.Text).FirstOrDefault();
+            
+            var text = spendingNameTextBox.Text;
+            var item = _myContext.SpendingItems.Where(n => n.Name == text).FirstOrDefault();
             if (item != null)
                 numericUpDown.Value = item.LastValue;
         }
 
-        private void categoryTextBox_TextChanged(object sender, EventArgs e)
+        private void AddSpending_Load(object sender, EventArgs e)
         {
-            categoryList = _myContext.SpendingItems
-                .Where(n => n.Name.Contains(categoryTextBox.Text))
-                .Select(s => s.Name).ToList();
-            categoryTextBox.AutoCompleteCustomSource.AddRange(categoryList.ToArray());
+            spendingNameTextBox.AutoCompleteCustomSource.AddRange(_myContext.SpendingItems.Select(m => m.Name).ToArray());
+            categoryTextBox.AutoCompleteCustomSource.AddRange(_myContext.Categroies.Select(m => m.Name).ToArray());
+        }
+
+        private void CanceButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

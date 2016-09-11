@@ -233,9 +233,8 @@ namespace BudgetRegistry
                     }
                     else
                     {
-                        //spendItem.CategoryId = category.Id;
                         spendItem.LastValue = item.Value;
-                        //spendItem.Name = item.Name;
+                        spendItem.CategoryId = category.Id;
                         _myContext.SaveChanges();
 
                     }
@@ -334,6 +333,11 @@ namespace BudgetRegistry
         private void backgroundExportWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             exportAllSpending.Enabled = true;
+        }
+
+        private void addIncome_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            OpenForm("AddIncome");
         }
     }
 }

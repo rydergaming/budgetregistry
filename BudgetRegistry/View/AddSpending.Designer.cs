@@ -58,7 +58,6 @@
             this.categoryTextBox.Size = new System.Drawing.Size(310, 20);
             this.categoryTextBox.TabIndex = 1;
             this.categoryTextBox.Text = "Default";
-            this.categoryTextBox.TextChanged += new System.EventHandler(this.categoryTextBox_TextChanged);
             // 
             // numericUpDown
             // 
@@ -116,6 +115,7 @@
             this.CanceButton.TabIndex = 8;
             this.CanceButton.Text = "Cancel";
             this.CanceButton.UseVisualStyleBackColor = true;
+            this.CanceButton.Click += new System.EventHandler(this.CanceButton_Click);
             // 
             // AddSpending
             // 
@@ -132,6 +132,7 @@
             this.Controls.Add(this.spendingNameTextBox);
             this.Name = "AddSpending";
             this.Text = "AddSpending";
+            this.Load += new System.EventHandler(this.AddSpending_Load);
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();

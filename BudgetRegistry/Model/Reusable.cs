@@ -111,6 +111,7 @@ namespace BudgetRegistry.Model
             {
                 totalSpending += (int?)row.Cells[3].Value ?? 0;
             }
+            MessageBox.Show(totalSpending.ToString());
             if (totalSpending != 0)
                 foreach (DataGridViewRow row in dataGrid.Rows)
                 {

@@ -71,7 +71,6 @@
             this.itemCategoryTextBox.Size = new System.Drawing.Size(239, 20);
             this.itemCategoryTextBox.TabIndex = 3;
             this.itemCategoryTextBox.Text = "Default";
-            this.itemCategoryTextBox.TextChanged += new System.EventHandler(this.itemCategoryTextBox_TextChanged);
             // 
             // label1
             // 

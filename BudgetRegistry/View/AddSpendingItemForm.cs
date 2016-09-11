@@ -14,31 +14,13 @@ namespace BudgetRegistry.View
 {
     public partial class AddSpendingItemForm : Form
     {
-        List<String> nameList;
-        List<String> categoryList;
         Context _myContext = new Context();
         public AddSpendingItemForm()
         {
             InitializeComponent();
             bindingSource.DataSource = _myContext.SpendingItems.ToList();
-        }
-
-        private void itemNameTextBox_TextChanged(object sender, EventArgs e)
-        {
-            Context context = new Context();
-            nameList = context.SpendingItems
-                .Where(n => n.Name.Contains(itemNameTextBox.Text))
-                .Select(s => s.Name).ToList();
-            itemNameTextBox.AutoCompleteCustomSource.AddRange(nameList.ToArray());
-        }
-
-        private void itemCategoryTextBox_TextChanged(object sender, EventArgs e)
-        {
-            Context context = new Context();
-            categoryList = context.Categroies
-                .Where(n => n.Name.Contains(itemCategoryTextBox.Text))
-                .Select(s => s.Name).ToList();
-            itemCategoryTextBox.AutoCompleteCustomSource.AddRange(nameList.ToArray());
+            itemNameTextBox.AutoCompleteCustomSource.AddRange(_myContext.SpendingItems.Select(m => m.Name).ToArray());
+            itemCategoryTextBox.AutoCompleteCustomSource.AddRange(_myContext.Categroies.Select(m => m.Name).ToArray());
         }
 
         private void addItemButton_Click(object sender, EventArgs e)
@@ -108,6 +90,15 @@ namespace BudgetRegistry.View
             ViewSpendingItems form = (ViewSpendingItems)Reusable.GetForm("BudgetRegistry.View.ViewSpendingItems");
             if (form !=null)
                 form.refresh();
+        }
+
+        private void itemNameTextBox_TextChanged(object sender, EventArgs e)
+        {
+            var item = _myContext.SpendingItems.Where(m => m.Name == itemNameTextBox.Text).FirstOrDefault();
+            if (item != null)
+            {
+                numericUpDown.Value = item.LastValue;
+            }
         }
     }
 }
