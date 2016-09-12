@@ -20,7 +20,6 @@ namespace BudgetRegistry.Model
             {
                 return Set<CategoryModel>();
             }
-            set { }
         }
         public IDbSet<IncomeItemModel> IncomeItems
         {
@@ -28,7 +27,6 @@ namespace BudgetRegistry.Model
             {
                 return Set<IncomeItemModel>();
             }
-            set { }
         }
         public IDbSet<IncomeModel> Incomes
         {
@@ -36,7 +34,6 @@ namespace BudgetRegistry.Model
             {
                 return Set<IncomeModel>();
             }
-            set { }
         }
         public IDbSet<SpendingItemModel> SpendingItems
         {
@@ -44,7 +41,6 @@ namespace BudgetRegistry.Model
             {
                 return Set<SpendingItemModel>();
             }
-            set { }
         }
         public IDbSet<SpendingModel> Spendings
         {
@@ -52,7 +48,6 @@ namespace BudgetRegistry.Model
             {
                 return Set<SpendingModel>();
             }
-            set { }
         }
         public IDbSet<UserModel> Users
         {
@@ -60,7 +55,6 @@ namespace BudgetRegistry.Model
             {
                 return Set<UserModel>();
             }
-            set { }
         }
     }
 }

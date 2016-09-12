@@ -9,11 +9,11 @@ namespace BudgetRegistry.Model
 {
     interface IContext
     {
-        IDbSet<CategoryModel> Categroies { get; set; }
-        IDbSet<IncomeItemModel> IncomeItems { get; set; }
-        IDbSet<IncomeModel> Incomes { get; set; }
-        IDbSet<SpendingItemModel> SpendingItems { get; set; }
-        IDbSet<SpendingModel> Spendings { get; set; }
-        IDbSet<UserModel> Users { get; set; }
+        IDbSet<CategoryModel> Categroies { get; }
+        IDbSet<IncomeItemModel> IncomeItems { get; }
+        IDbSet<IncomeModel> Incomes { get; }
+        IDbSet<SpendingItemModel> SpendingItems { get; }
+        IDbSet<SpendingModel> Spendings { get; }
+        IDbSet<UserModel> Users { get; }
     }
 }
