@@ -20,8 +20,9 @@ namespace BudgetRegistry.View
             InitializeComponent();
             MainForm form = (MainForm)Reusable.GetForm("BudgetRegistry.MainForm");
             _user = form.CurrentUser;
-            numericUpDown.Maximum = Int32.MaxValue;
+            numericUpDown.Maximum = Int64.MaxValue;            
         }
+        
 
         private void addIncomeButton_Click(object sender, EventArgs e)
         {
@@ -89,6 +90,11 @@ namespace BudgetRegistry.View
         {
             incomeNameTextBox.AutoCompleteCustomSource.AddRange(_myContext.IncomeItems.Select(m => m.Name).ToArray());
             categoryTextBox.AutoCompleteCustomSource.AddRange(_myContext.Categroies.Select(m => m.Name).ToArray());
+        }
+
+        private void cancelButton_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
     }
 }

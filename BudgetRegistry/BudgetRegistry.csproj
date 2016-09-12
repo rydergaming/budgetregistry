@@ -85,8 +85,13 @@
     <Compile Include="Migrations\201609050847265_initial.Designer.cs">
       <DependentUpon>201609050847265_initial.cs</DependentUpon>
     </Compile>
+    <Compile Include="Migrations\201609120823457_initial1.cs" />
+    <Compile Include="Migrations\201609120823457_initial1.Designer.cs">
+      <DependentUpon>201609120823457_initial1.cs</DependentUpon>
+    </Compile>
     <Compile Include="Migrations\Configuration.cs" />
     <Compile Include="Model\Context.cs" />
+    <Compile Include="Model\CsvModelDateless.cs" />
     <Compile Include="Model\CsvModel.cs" />
     <Compile Include="Model\IContext.cs" />
     <Compile Include="Model\Password.cs" />
@@ -156,6 +161,9 @@
     </Compile>
     <EmbeddedResource Include="Migrations\201609050847265_initial.resx">
       <DependentUpon>201609050847265_initial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Migrations\201609120823457_initial1.resx">
+      <DependentUpon>201609120823457_initial1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="View\AddIncome.resx">
       <DependentUpon>AddIncome.cs</DependentUpon>

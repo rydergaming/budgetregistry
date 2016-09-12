@@ -142,13 +142,13 @@ namespace BudgetRegistry.Model
             double totalIncome = 0;
             foreach (DataGridViewRow row in dataGrid.Rows)
             {
-                totalSpending += (int?)row.Cells[3].Value ?? 0;
-                totalIncome += (int?)row.Cells[2].Value ?? 0;
+                totalSpending += (long?)row.Cells[3].Value ?? 0;
+                totalIncome += (long?)row.Cells[2].Value ?? 0;
             }
             if (totalSpending != 0)
                 foreach (DataGridViewRow row in dataGrid.Rows)
                 {
-                    var percent = (((int?)row.Cells[3].Value ?? 0) * 100D) / totalSpending;
+                    var percent = (((long?)row.Cells[3].Value ?? 0) * 100D) / totalSpending;
                     percent = Math.Round(percent, 4);
                     row.Cells[6].Value = percent.ToString() + "%";
                 }
@@ -156,7 +156,7 @@ namespace BudgetRegistry.Model
             {
                 foreach (DataGridViewRow row in dataGrid.Rows)
                 {
-                    var percent = (((int?)row.Cells[2].Value ?? 0) * 100D) / totalIncome;
+                    var percent = (((long?)row.Cells[2].Value ?? 0) * 100D) / totalIncome;
                     percent = Math.Round(percent, 4);
                     row.Cells[5].Value = percent.ToString() + "%";
                 }
@@ -167,9 +167,9 @@ namespace BudgetRegistry.Model
         {
             public int Id { get; set; }
             public string Name { get; set; }
-            public int TotalIncome { get; set; }
-            public int TotalSpending { get; set; }
-            public int Difference { get; set; }
+            public long TotalIncome { get; set; }
+            public long TotalSpending { get; set; }
+            public long Difference { get; set; }
             public string IncomePercent { get; set; }
             public string SpendingPercent { get; set; }
             

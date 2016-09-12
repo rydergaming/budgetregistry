@@ -135,7 +135,7 @@ namespace BudgetRegistry
                         if (form != null)
                             form.refresh();
                     }));
-                    var item = reader.GetRecord<CsvModel>();
+                    var item = reader.GetRecord<CsvModelDateless>();
                     var category = Reusable.CheckCategory(_myContext, item.CategoryName);
 
                     if (category == null)
@@ -149,7 +149,10 @@ namespace BudgetRegistry
                     }
                     category = Reusable.CheckCategory(_myContext, item.CategoryName);
 
-
+                    if (item.Id == null)
+                    {
+                        item.Id = -1;
+                    }
                     var spendItem = _myContext.SpendingItems.Where(s => s.Id == item.Id).FirstOrDefault();
                     if (spendItem == null)
                     {

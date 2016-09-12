@@ -11,7 +11,7 @@ namespace BudgetRegistry.Model
         public int Id { get; set; }
         public int UserId { get; set; }
         public int IncomeItemId { get; set; }
-        public int Value { get; set; }
+        public long Value { get; set; }
         public DateTime CreatedTime { get; set; }
     }
 }

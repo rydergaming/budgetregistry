@@ -6,12 +6,11 @@ using System.Threading.Tasks;
 
 namespace BudgetRegistry.Model
 {
-    public class SpendingModel
+    class CsvModelDateless
     {
-        public int Id { get; set; }
-        public int UserId { get; set; }
-        public int SpendingItemId { get; set; }
+        public int? Id { get; set; }
+        public string Name { get; set; }
+        public string CategoryName { get; set; }
         public long Value { get; set; }
-        public DateTime CreatedTime { get; set; }
     }
 }
