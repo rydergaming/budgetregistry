@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -50,7 +51,6 @@ namespace BudgetRegistry.View
             {
                 MessageBox.Show("Wrong username/password.");
             }
-           
         }
 
         private void registerButton_Click(object sender, EventArgs e)
@@ -79,8 +79,15 @@ namespace BudgetRegistry.View
                 myContext.Users.Add(newUser);
                 myContext.SaveChanges();
                 user = newUser;
+                MessageBox.Show("Successfully Registered " + user.UserName + ".\nLogging in.");
                 DialogResult = DialogResult.OK;
             }
+        }
+
+        private void LoginForm_Load(object sender, EventArgs e)
+        {
+            DateTime lastModified = File.GetLastWriteTime("BudgetRegistry.exe");
+            infoLabel.Text = "Budget Registry | Last Modified: " + lastModified.ToString("dd/MM/yy HH:mm:ss");
         }
     }
 }

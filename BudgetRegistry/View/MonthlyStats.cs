@@ -21,6 +21,7 @@ namespace BudgetRegistry.View
         List<Stats> _stats;
         Context _myContext = new Context();
         IQueryable<SpendingModel> _yearlySpendings;
+        IQueryable<IncomeModel> _yearlyIncomes;
         public MonthlyStats()
         {
             InitializeComponent();
@@ -31,8 +32,11 @@ namespace BudgetRegistry.View
         {
             MainForm form = (MainForm)Reusable.GetForm("BudgetRegistry.MainForm");
             _user = form.CurrentUser;
-            _yearlySpendings = _myContext.Spendings.Where(m => m.CreatedTime.Year == (int)yearNumericUpDown.Value);
-            Reusable.TotalSpendingIncome(_stats, _yearlySpendings,false);
+            var year = (int)yearNumericUpDown.Value;
+            _yearlySpendings = _myContext.Spendings.Where(m => m.CreatedTime.Year == year);
+            _yearlyIncomes = _myContext.Incomes.Where(m => m.CreatedTime.Year == year);
+            Reusable.TotalSpendingIncome(_stats, _yearlySpendings, _yearlyIncomes, false);
+            
 
             monthlyStatGrid.DataSource = _stats;
             monthlyStatGrid.Columns[1].Visible = false;
@@ -45,8 +49,9 @@ namespace BudgetRegistry.View
             if (monthlyStatGrid.CurrentRow == null) return;
 
             var monthlySpendings = _yearlySpendings.Where(m => m.CreatedTime.Month == monthlyStatGrid.CurrentRow.Index + 1).ToList();
+            var monthlyIncome = _yearlyIncomes.Where(m => m.CreatedTime.Month == monthlyStatGrid.CurrentRow.Index + 1).ToList();
 
-            monthCategoryGrid.DataSource = (IBindingList)Reusable.CategoryStats(monthlySpendings);
+            monthCategoryGrid.DataSource = (IBindingList)Reusable.CategoryStats(monthlySpendings,monthlyIncome);
 
             Reusable.PercentStats(monthCategoryGrid);
         }
@@ -55,7 +60,7 @@ namespace BudgetRegistry.View
         {
             resetMonthlyGrid();
             _yearlySpendings = _myContext.Spendings.Where(m => m.CreatedTime.Year == (int)yearNumericUpDown.Value);
-            Reusable.TotalSpendingIncome(_stats, _yearlySpendings,false);
+            Reusable.TotalSpendingIncome(_stats, _yearlySpendings, _yearlyIncomes, false);
 
             monthlyStatGrid.DataSource = _stats;
             monthlyStatGrid.Refresh();

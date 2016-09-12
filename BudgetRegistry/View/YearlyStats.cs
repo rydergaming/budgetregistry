@@ -18,6 +18,7 @@ namespace BudgetRegistry.View
         List<Stats> _stats;
         Context _myContext = new Context();
         IQueryable<SpendingModel> _allTimeSpendings;
+        IQueryable<IncomeModel> _allTimeIncomes;
         public YearlyStats()
         {
             InitializeComponent();
@@ -41,7 +42,8 @@ namespace BudgetRegistry.View
             MainForm form = (MainForm)Reusable.GetForm("BudgetRegistry.MainForm");
             _user = form.CurrentUser;
             _allTimeSpendings = _myContext.Spendings;
-            Reusable.TotalSpendingIncome(_stats, _allTimeSpendings,true);
+            _allTimeIncomes = _myContext.Incomes;
+            Reusable.TotalSpendingIncome(_stats, _allTimeSpendings, _allTimeIncomes, true);
 
             allTimeDataGrid.DataSource = _stats;
             allTimeDataGrid.Columns[1].Visible = false;
@@ -55,8 +57,10 @@ namespace BudgetRegistry.View
             int tmp = allTimeDataGrid.CurrentRow.Index + 1950;
             var monthlySpendings = _allTimeSpendings
                 .Where(m => m.CreatedTime.Year == tmp).ToList();
+            var monthlyIncomes = _allTimeIncomes
+                .Where(m => m.CreatedTime.Year == tmp).ToList();
 
-            yearlyDataGrid.DataSource = (IBindingList)Reusable.CategoryStats(monthlySpendings);
+            yearlyDataGrid.DataSource = (IBindingList)Reusable.CategoryStats(monthlySpendings, monthlyIncomes);
 
             Reusable.PercentStats(yearlyDataGrid);
         }

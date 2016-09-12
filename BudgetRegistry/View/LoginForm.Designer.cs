@@ -37,6 +37,7 @@
             this.passwordTextBox = new System.Windows.Forms.TextBox();
             this.statusStrip = new System.Windows.Forms.StatusStrip();
             this.infoLabel = new System.Windows.Forms.ToolStripStatusLabel();
+            this.label1 = new System.Windows.Forms.Label();
             this.bindingSource = new System.Windows.Forms.BindingSource(this.components);
             this.statusStrip.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource)).BeginInit();
@@ -44,6 +45,7 @@
             // 
             // loginButton
             // 
+            this.loginButton.DialogResult = System.Windows.Forms.DialogResult.OK;
             this.loginButton.Location = new System.Drawing.Point(111, 211);
             this.loginButton.Name = "loginButton";
             this.loginButton.Size = new System.Drawing.Size(75, 23);
@@ -91,6 +93,7 @@
             // 
             this.passwordTextBox.Location = new System.Drawing.Point(111, 169);
             this.passwordTextBox.Name = "passwordTextBox";
+            this.passwordTextBox.PasswordChar = '*';
             this.passwordTextBox.Size = new System.Drawing.Size(194, 20);
             this.passwordTextBox.TabIndex = 5;
             // 
@@ -107,8 +110,23 @@
             // infoLabel
             // 
             this.infoLabel.Name = "infoLabel";
-            this.infoLabel.Size = new System.Drawing.Size(56, 17);
-            this.infoLabel.Text = "infoLabel";
+            this.infoLabel.Overflow = System.Windows.Forms.ToolStripItemOverflow.Never;
+            this.infoLabel.Size = new System.Drawing.Size(25, 17);
+            this.infoLabel.Text = "kek";
+            // 
+            // label1
+            // 
+            this.label1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.label1.AutoSize = true;
+            this.label1.Font = new System.Drawing.Font("Impact", 15.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(238)));
+            this.label1.Location = new System.Drawing.Point(122, 33);
+            this.label1.Name = "label1";
+            this.label1.Size = new System.Drawing.Size(83, 52);
+            this.label1.TabIndex = 7;
+            this.label1.Text = "Budget\r\nRegistry";
+            this.label1.TextAlign = System.Drawing.ContentAlignment.TopCenter;
             // 
             // bindingSource
             // 
@@ -119,6 +137,7 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(327, 295);
+            this.Controls.Add(this.label1);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.passwordTextBox);
             this.Controls.Add(this.usernameTextBox);
@@ -127,8 +146,9 @@
             this.Controls.Add(this.registerButton);
             this.Controls.Add(this.loginButton);
             this.Name = "LoginForm";
-            this.Text = "LoginForm";
+            this.Text = "Login";
             this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LoginForm_FormClosing);
+            this.Load += new System.EventHandler(this.LoginForm_Load);
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource)).EndInit();
@@ -148,5 +168,6 @@
         private System.Windows.Forms.StatusStrip statusStrip;
         private System.Windows.Forms.ToolStripStatusLabel infoLabel;
         public System.Windows.Forms.BindingSource bindingSource;
+        private System.Windows.Forms.Label label1;
     }
 }

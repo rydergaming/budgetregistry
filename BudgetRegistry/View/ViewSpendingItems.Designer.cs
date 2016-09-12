@@ -30,10 +30,10 @@
         {
             this.components = new System.ComponentModel.Container();
             this.spendingGrid = new System.Windows.Forms.DataGridView();
-            this.spendingItemSource = new System.Windows.Forms.BindingSource(this.components);
             this.idDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.nameDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.lastValueDataGridViewTextBoxColumn = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.spendingItemSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.spendingGrid)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.spendingItemSource)).BeginInit();
             this.SuspendLayout();
@@ -52,10 +52,6 @@
             this.spendingGrid.Size = new System.Drawing.Size(657, 320);
             this.spendingGrid.TabIndex = 0;
             this.spendingGrid.CellValueChanged += new System.Windows.Forms.DataGridViewCellEventHandler(this.spendingGrid_CellValueChanged);
-            // 
-            // spendingItemSource
-            // 
-            this.spendingItemSource.DataSource = typeof(BudgetRegistry.Model.SpendingItemModel);
             // 
             // idDataGridViewTextBoxColumn
             // 
@@ -76,6 +72,10 @@
             this.lastValueDataGridViewTextBoxColumn.HeaderText = "LastValue";
             this.lastValueDataGridViewTextBoxColumn.Name = "lastValueDataGridViewTextBoxColumn";
             // 
+            // spendingItemSource
+            // 
+            this.spendingItemSource.DataSource = typeof(BudgetRegistry.Model.SpendingItemModel);
+            // 
             // ViewSpendingItems
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -83,7 +83,7 @@
             this.ClientSize = new System.Drawing.Size(657, 320);
             this.Controls.Add(this.spendingGrid);
             this.Name = "ViewSpendingItems";
-            this.Text = "ViewSpendingItems";
+            this.Text = "View Spending Items";
             this.Load += new System.EventHandler(this.ViewSpendingItems_Load);
             ((System.ComponentModel.ISupportInitialize)(this.spendingGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.spendingItemSource)).EndInit();

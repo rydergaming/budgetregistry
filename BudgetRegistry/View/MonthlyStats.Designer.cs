@@ -39,18 +39,29 @@
             // 
             // monthlyStatGrid
             // 
+            this.monthlyStatGrid.AllowUserToAddRows = false;
+            this.monthlyStatGrid.AllowUserToDeleteRows = false;
+            this.monthlyStatGrid.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.monthlyStatGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.monthlyStatGrid.Location = new System.Drawing.Point(12, 38);
             this.monthlyStatGrid.Name = "monthlyStatGrid";
+            this.monthlyStatGrid.ReadOnly = true;
             this.monthlyStatGrid.Size = new System.Drawing.Size(638, 146);
             this.monthlyStatGrid.TabIndex = 0;
             this.monthlyStatGrid.CellClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.monthlyStatGrid_CellClick);
             // 
             // monthCategoryGrid
             // 
+            this.monthCategoryGrid.AllowUserToAddRows = false;
+            this.monthCategoryGrid.AllowUserToDeleteRows = false;
+            this.monthCategoryGrid.Anchor = ((System.Windows.Forms.AnchorStyles)(((System.Windows.Forms.AnchorStyles.Bottom | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.monthCategoryGrid.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.monthCategoryGrid.Location = new System.Drawing.Point(12, 205);
             this.monthCategoryGrid.Name = "monthCategoryGrid";
+            this.monthCategoryGrid.ReadOnly = true;
             this.monthCategoryGrid.Size = new System.Drawing.Size(638, 133);
             this.monthCategoryGrid.TabIndex = 1;
             // 
@@ -96,7 +107,7 @@
             this.Controls.Add(this.monthCategoryGrid);
             this.Controls.Add(this.monthlyStatGrid);
             this.Name = "MonthlyStats";
-            this.Text = "MonthlyStats";
+            this.Text = "Monthly Statistics";
             this.Load += new System.EventHandler(this.MonthlyStats_Load);
             ((System.ComponentModel.ISupportInitialize)(this.monthlyStatGrid)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.monthCategoryGrid)).EndInit();

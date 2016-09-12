@@ -29,41 +29,45 @@
         private void InitializeComponent()
         {
             this.incomeNameTextBox = new System.Windows.Forms.TextBox();
-            this.CategoryTextBox = new System.Windows.Forms.TextBox();
-            this.numericUpDown1 = new System.Windows.Forms.NumericUpDown();
-            this.dateTimePicker1 = new System.Windows.Forms.DateTimePicker();
+            this.categoryTextBox = new System.Windows.Forms.TextBox();
+            this.numericUpDown = new System.Windows.Forms.NumericUpDown();
+            this.dateTimePicker = new System.Windows.Forms.DateTimePicker();
             this.addIncomeButton = new System.Windows.Forms.Button();
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown)).BeginInit();
             this.SuspendLayout();
             // 
             // incomeNameTextBox
             // 
+            this.incomeNameTextBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.incomeNameTextBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
             this.incomeNameTextBox.Location = new System.Drawing.Point(189, 12);
             this.incomeNameTextBox.Name = "incomeNameTextBox";
             this.incomeNameTextBox.Size = new System.Drawing.Size(264, 20);
             this.incomeNameTextBox.TabIndex = 0;
             // 
-            // CategoryTextBox
+            // categoryTextBox
             // 
-            this.CategoryTextBox.Location = new System.Drawing.Point(189, 56);
-            this.CategoryTextBox.Name = "CategoryTextBox";
-            this.CategoryTextBox.Size = new System.Drawing.Size(264, 20);
-            this.CategoryTextBox.TabIndex = 1;
+            this.categoryTextBox.AutoCompleteMode = System.Windows.Forms.AutoCompleteMode.SuggestAppend;
+            this.categoryTextBox.AutoCompleteSource = System.Windows.Forms.AutoCompleteSource.CustomSource;
+            this.categoryTextBox.Location = new System.Drawing.Point(189, 56);
+            this.categoryTextBox.Name = "categoryTextBox";
+            this.categoryTextBox.Size = new System.Drawing.Size(264, 20);
+            this.categoryTextBox.TabIndex = 1;
             // 
-            // numericUpDown1
+            // numericUpDown
             // 
-            this.numericUpDown1.Location = new System.Drawing.Point(189, 100);
-            this.numericUpDown1.Name = "numericUpDown1";
-            this.numericUpDown1.Size = new System.Drawing.Size(264, 20);
-            this.numericUpDown1.TabIndex = 2;
+            this.numericUpDown.Location = new System.Drawing.Point(189, 100);
+            this.numericUpDown.Name = "numericUpDown";
+            this.numericUpDown.Size = new System.Drawing.Size(264, 20);
+            this.numericUpDown.TabIndex = 2;
             // 
-            // dateTimePicker1
+            // dateTimePicker
             // 
-            this.dateTimePicker1.Format = System.Windows.Forms.DateTimePickerFormat.Short;
-            this.dateTimePicker1.Location = new System.Drawing.Point(189, 144);
-            this.dateTimePicker1.Name = "dateTimePicker1";
-            this.dateTimePicker1.Size = new System.Drawing.Size(264, 20);
-            this.dateTimePicker1.TabIndex = 3;
+            this.dateTimePicker.Format = System.Windows.Forms.DateTimePickerFormat.Short;
+            this.dateTimePicker.Location = new System.Drawing.Point(189, 144);
+            this.dateTimePicker.Name = "dateTimePicker";
+            this.dateTimePicker.Size = new System.Drawing.Size(264, 20);
+            this.dateTimePicker.TabIndex = 3;
             // 
             // addIncomeButton
             // 
@@ -73,6 +77,7 @@
             this.addIncomeButton.TabIndex = 4;
             this.addIncomeButton.Text = "Add Income";
             this.addIncomeButton.UseVisualStyleBackColor = true;
+            this.addIncomeButton.Click += new System.EventHandler(this.addIncomeButton_Click);
             // 
             // AddIncome
             // 
@@ -80,13 +85,14 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(465, 245);
             this.Controls.Add(this.addIncomeButton);
-            this.Controls.Add(this.dateTimePicker1);
-            this.Controls.Add(this.numericUpDown1);
-            this.Controls.Add(this.CategoryTextBox);
+            this.Controls.Add(this.dateTimePicker);
+            this.Controls.Add(this.numericUpDown);
+            this.Controls.Add(this.categoryTextBox);
             this.Controls.Add(this.incomeNameTextBox);
             this.Name = "AddIncome";
             this.Text = "AddIncome";
-            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown1)).EndInit();
+            this.Load += new System.EventHandler(this.AddIncome_Load);
+            ((System.ComponentModel.ISupportInitialize)(this.numericUpDown)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -95,9 +101,9 @@
         #endregion
 
         private System.Windows.Forms.TextBox incomeNameTextBox;
-        private System.Windows.Forms.TextBox CategoryTextBox;
-        private System.Windows.Forms.NumericUpDown numericUpDown1;
-        private System.Windows.Forms.DateTimePicker dateTimePicker1;
+        private System.Windows.Forms.TextBox categoryTextBox;
+        private System.Windows.Forms.NumericUpDown numericUpDown;
+        private System.Windows.Forms.DateTimePicker dateTimePicker;
         private System.Windows.Forms.Button addIncomeButton;
     }
 }

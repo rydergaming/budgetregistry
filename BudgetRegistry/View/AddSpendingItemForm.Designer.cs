@@ -84,7 +84,7 @@
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(25, 71);
+            this.label2.Location = new System.Drawing.Point(25, 69);
             this.label2.Name = "label2";
             this.label2.Size = new System.Drawing.Size(57, 13);
             this.label2.TabIndex = 5;
@@ -101,7 +101,7 @@
             // 
             // numericUpDown
             // 
-            this.numericUpDown.Location = new System.Drawing.Point(177, 69);
+            this.numericUpDown.Location = new System.Drawing.Point(177, 66);
             this.numericUpDown.Name = "numericUpDown";
             this.numericUpDown.Size = new System.Drawing.Size(239, 20);
             this.numericUpDown.TabIndex = 7;
@@ -123,7 +123,7 @@
             this.Controls.Add(this.itemNameTextBox);
             this.Controls.Add(this.addItemButton);
             this.Name = "AddSpendingItemForm";
-            this.Text = "AddSpendingItemForm";
+            this.Text = "Add Spending Item";
             ((System.ComponentModel.ISupportInitialize)(this.numericUpDown)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.bindingSource)).EndInit();
             this.ResumeLayout(false);
