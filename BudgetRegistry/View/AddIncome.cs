@@ -20,6 +20,7 @@ namespace BudgetRegistry.View
             InitializeComponent();
             MainForm form = (MainForm)Reusable.GetForm("BudgetRegistry.MainForm");
             _user = form.CurrentUser;
+            numericUpDown.Maximum = Int32.MaxValue;
         }
 
         private void addIncomeButton_Click(object sender, EventArgs e)

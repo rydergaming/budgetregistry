@@ -21,6 +21,7 @@ namespace BudgetRegistry.View
             InitializeComponent();
             MainForm form = (MainForm)Reusable.GetForm("BudgetRegistry.MainForm");
                 _user = form.CurrentUser;
+            numericUpDown.Maximum = Int32.MaxValue;
 
         }
 
@@ -81,7 +82,7 @@ namespace BudgetRegistry.View
             numericUpDown.Value = 0;
             ViewSpendings form = (ViewSpendings)Reusable.GetForm("BudgetRegistry.View.ViewSpendings");
             if (form != null)
-                form.refresh();
+                form.refreshList();
             else
                 MessageBox.Show("Form was null");
 

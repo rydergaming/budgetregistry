@@ -21,6 +21,7 @@ namespace BudgetRegistry.View
             bindingSource.DataSource = _myContext.SpendingItems.ToList();
             itemNameTextBox.AutoCompleteCustomSource.AddRange(_myContext.SpendingItems.Select(m => m.Name).ToArray());
             itemCategoryTextBox.AutoCompleteCustomSource.AddRange(_myContext.Categroies.Select(m => m.Name).ToArray());
+            numericUpDown.Maximum = Int32.MaxValue;
         }
 
         private void addItemButton_Click(object sender, EventArgs e)

@@ -62,9 +62,10 @@ namespace BudgetRegistry.View
         }
 
 
-        private void refreshList()
+        public void refreshList()
         {
             List<SpendingModel> spendingList;
+            dataGridView.Rows.Clear();
             if (_user.UserName != "admin")
                 spendingList = context.Spendings
                 .Where(m => m.CreatedTime.Year == yearUpDown.Value 
