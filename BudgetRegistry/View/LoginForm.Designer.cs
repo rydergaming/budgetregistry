@@ -147,7 +147,7 @@
             this.Controls.Add(this.loginButton);
             this.Name = "LoginForm";
             this.Text = "Login";
-            this.FormClosing += new System.Windows.Forms.FormClosingEventHandler(this.LoginForm_FormClosing);
+
             this.Load += new System.EventHandler(this.LoginForm_Load);
             this.statusStrip.ResumeLayout(false);
             this.statusStrip.PerformLayout();

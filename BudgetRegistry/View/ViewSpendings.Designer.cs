@@ -212,6 +212,7 @@
             0,
             0,
             0});
+            this.monthUpDown.ValueChanged += new System.EventHandler(this.monthUpDown_ValueChanged);
             // 
             // viewedSpendingModelBindingSource
             // 

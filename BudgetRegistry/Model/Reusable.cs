@@ -10,7 +10,6 @@ namespace BudgetRegistry.Model
 {
     public static class Reusable
     {
-        //static Context _myContext = new Context();
         public static CategoryModel CheckCategory(IContext context, string name)
         {
             return context.Categroies.Where(c => c.Name == name).FirstOrDefault();
@@ -82,7 +81,7 @@ namespace BudgetRegistry.Model
             }
         }
 
-        public static BindingList<Stats> CategoryStats(IContext _myContext, List<SpendingModel> spendings, List<IncomeModel> incomes)
+        public static BindingList<Stats> CategoryStats(IContext context, List<SpendingModel> spendings, List<IncomeModel> incomes)
         {
             
             List<SpendingItemModel> spendingItems = new List<SpendingItemModel>();
@@ -90,21 +89,21 @@ namespace BudgetRegistry.Model
 
             foreach (var item in spendings)
             {
-                spendingItems.Add(_myContext.SpendingItems.Where(m => m.Id == item.SpendingItemId).FirstOrDefault());
+                spendingItems.Add(context.SpendingItems.Where(m => m.Id == item.SpendingItemId).FirstOrDefault());
             }
             foreach (var item in incomes)
             {
-                incomeItems.Add(_myContext.IncomeItems.Where(m => m.Id == item.IncomeItemId).FirstOrDefault());
+                incomeItems.Add(context.IncomeItems.Where(m => m.Id == item.IncomeItemId).FirstOrDefault());
             }
             List<CategoryModel> categories = new List<CategoryModel>();
 
             foreach (var item in spendingItems)
             {
-                categories.Add(_myContext.Categroies.Where(m => m.Id == item.CategoryId).FirstOrDefault());
+                categories.Add(context.Categroies.Where(m => m.Id == item.CategoryId).FirstOrDefault());
             }
             foreach (var item in incomeItems)
             {
-                categories.Add(_myContext.Categroies.Where(m => m.Id == item.CategoryId).FirstOrDefault());
+                categories.Add(context.Categroies.Where(m => m.Id == item.CategoryId).FirstOrDefault());
             }
             categories = categories.Distinct().ToList();
             List<Stats> stats = new List<Stats>();

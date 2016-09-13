@@ -137,6 +137,7 @@
     <Compile Include="Model\Password.cs" />
     <Compile Include="Model\Reusable.cs" />
     <Compile Include="Model\ViewedSpendingModel.cs" />
+    <Compile Include="Tests\PasswordTests.cs" />
     <Compile Include="Tests\ReusableTests.cs" />
     <Compile Include="View\AddIncome.cs">
       <SubType>Form</SubType>

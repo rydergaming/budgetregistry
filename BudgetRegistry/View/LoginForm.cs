@@ -14,17 +14,11 @@ namespace BudgetRegistry.View
 {
     public partial class LoginForm : Form
     {
-        Context myContext = new BudgetRegistry.Model.Context();
+        Context _myContext = new Context();
         public UserModel user;
         public LoginForm()
         {
             InitializeComponent();
-            //users = (BindingList<UserModel>) bindingSource.DataSource;
-        }
-
-        private void LoginForm_FormClosing(object sender, FormClosingEventArgs e)
-        {
-
         }
 
         private void loginButton_Click(object sender, EventArgs e)
@@ -34,8 +28,7 @@ namespace BudgetRegistry.View
                 MessageBox.Show("Username/Password cannot be empty.");
                 return;
             }
-            var password = Password.EncryptPassword(passwordTextBox.Text);
-            user = Reusable.CheckUserModel(myContext, usernameTextBox.Text);
+            user = Reusable.CheckUserModel(_myContext, usernameTextBox.Text);
             if (user == null)
             {
                 MessageBox.Show("Wrong username/password.");
@@ -59,8 +52,7 @@ namespace BudgetRegistry.View
                 MessageBox.Show("Username/Password cannot be empty.");
                 return;
             }
-            var password = Password.EncryptPassword(passwordTextBox.Text);
-            user = myContext.Users.Where(u => u.UserName == usernameTextBox.Text)
+            user = _myContext.Users.Where(u => u.UserName == usernameTextBox.Text)
                 .FirstOrDefault();
 
             if (user != null)
@@ -75,8 +67,8 @@ namespace BudgetRegistry.View
                     UserName = usernameTextBox.Text,
                     Password = Password.EncryptPassword(passwordTextBox.Text)
                 };
-                myContext.Users.Add(newUser);
-                myContext.SaveChanges();
+                _myContext.Users.Add(newUser);
+                _myContext.SaveChanges();
                 user = newUser;
                 MessageBox.Show("Successfully Registered " + user.UserName + ".\nLogging in.");
                 DialogResult = DialogResult.OK;

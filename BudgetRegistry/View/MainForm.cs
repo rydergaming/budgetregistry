@@ -19,7 +19,7 @@ namespace BudgetRegistry
     {
         public UserModel CurrentUser;
         Context _myContext = new Context();
-        List<Form> activeForms = new List<Form>();
+
         public MainForm()
         {
             InitializeComponent();

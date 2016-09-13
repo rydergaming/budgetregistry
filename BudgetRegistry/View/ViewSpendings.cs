@@ -17,8 +17,8 @@ namespace BudgetRegistry.View
     public partial class ViewSpendings : Form
     {
         UserModel _user;
-        Context context = new Context();
-        //List<ViewedSpendingModel> list;
+        Context _myContext = new Context();
+
         public ViewSpendings()
         {
             InitializeComponent();
@@ -65,13 +65,13 @@ namespace BudgetRegistry.View
             List<SpendingModel> spendingList;
             dataGridView.Rows.Clear();
             if (_user.UserName != "admin")
-                spendingList = context.Spendings
+                spendingList = _myContext.Spendings
                 .Where(m => m.CreatedTime.Year == yearUpDown.Value 
                 && m.CreatedTime.Month == monthUpDown.Value 
                 && m.UserId == _user.Id).ToList();
             else
             {
-                spendingList = context.Spendings
+                spendingList = _myContext.Spendings
                 .Where(m => m.CreatedTime.Year == yearUpDown.Value
                 && m.CreatedTime.Month == monthUpDown.Value).ToList();
             }
@@ -80,9 +80,9 @@ namespace BudgetRegistry.View
             
             foreach (var item in spendingList)
             {
-                var spendingItem = context.SpendingItems.Where(s => s.Id == item.SpendingItemId).FirstOrDefault();
-                var category = context.Categroies.Where(c => c.Id == spendingItem.CategoryId).FirstOrDefault();
-                var user = context.Users.Where(u => u.Id == item.UserId).FirstOrDefault();
+                var spendingItem = _myContext.SpendingItems.Where(s => s.Id == item.SpendingItemId).FirstOrDefault();
+                var category = _myContext.Categroies.Where(c => c.Id == spendingItem.CategoryId).FirstOrDefault();
+                var user = _myContext.Users.Where(u => u.Id == item.UserId).FirstOrDefault();
                 dataGridView.Rows.Add(item.Id, spendingItem.Name, category.Name, user.UserName, item.Value, item.CreatedTime);
 
             }
@@ -90,7 +90,7 @@ namespace BudgetRegistry.View
 
         private void refeshButton_Click(object sender, EventArgs e)
         {
-            dataGridView.Rows.Clear();
+            //dataGridView.Rows.Clear();
             refreshList();
             
         }
@@ -144,5 +144,10 @@ namespace BudgetRegistry.View
             exportSpendingsButton.Enabled = true;
         }
 
+        private void monthUpDown_ValueChanged(object sender, EventArgs e)
+        {
+            //dataGridView.Rows.Clear();
+            refreshList();
+        }
     }
 }
