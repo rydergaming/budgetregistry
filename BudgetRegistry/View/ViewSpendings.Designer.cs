@@ -246,7 +246,6 @@
             this.Controls.Add(this.autoRefreshCheckBox);
             this.Controls.Add(this.statusStrip);
             this.Controls.Add(this.dataGridView);
-
             this.Text = "View Spendings";
             this.Load += new System.EventHandler(this.ViewSpendings_Load);
             ((System.ComponentModel.ISupportInitialize)(this.dataGridView)).EndInit();

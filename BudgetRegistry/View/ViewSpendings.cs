@@ -56,9 +56,7 @@ namespace BudgetRegistry.View
         {
             if (!autoRefreshCheckBox.Checked) return;
 
-            //list.Clear();
             refreshList();
-            //dataGridView1.DataSource = list;
         }
 
 
@@ -86,7 +84,6 @@ namespace BudgetRegistry.View
                 var category = context.Categroies.Where(c => c.Id == spendingItem.CategoryId).FirstOrDefault();
                 var user = context.Users.Where(u => u.Id == item.UserId).FirstOrDefault();
                 dataGridView.Rows.Add(item.Id, spendingItem.Name, category.Name, user.UserName, item.Value, item.CreatedTime);
-                dataGridView.Refresh();
 
             }
         }
@@ -146,5 +143,6 @@ namespace BudgetRegistry.View
         {
             exportSpendingsButton.Enabled = true;
         }
+
     }
 }

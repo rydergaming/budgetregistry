@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace BudgetRegistry.Model
 {
-    interface IContext
+    public interface IContext
     {
         IDbSet<CategoryModel> Categroies { get; }
         IDbSet<IncomeItemModel> IncomeItems { get; }

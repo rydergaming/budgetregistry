@@ -60,7 +60,7 @@ namespace BudgetRegistry.View
             var monthlyIncomes = _allTimeIncomes
                 .Where(m => m.CreatedTime.Year == tmp).ToList();
 
-            yearlyDataGrid.DataSource = (IBindingList)Reusable.CategoryStats(monthlySpendings, monthlyIncomes);
+            yearlyDataGrid.DataSource = (IBindingList)Reusable.CategoryStats(_myContext, monthlySpendings, monthlyIncomes);
 
             Reusable.PercentStats(yearlyDataGrid);
         }

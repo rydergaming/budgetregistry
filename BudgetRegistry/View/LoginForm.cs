@@ -35,8 +35,7 @@ namespace BudgetRegistry.View
                 return;
             }
             var password = Password.EncryptPassword(passwordTextBox.Text);
-            user = myContext.Users.Where(u => u.UserName == usernameTextBox.Text)
-                .FirstOrDefault();
+            user = Reusable.CheckUserModel(myContext, usernameTextBox.Text);
             if (user == null)
             {
                 MessageBox.Show("Wrong username/password.");

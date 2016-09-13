@@ -10,23 +10,24 @@ namespace BudgetRegistry.Model
 {
     public static class Reusable
     {
-        static Context _myContext = new Context();
-        public static CategoryModel CheckCategory(Context context, string name)
+        //static Context _myContext = new Context();
+        public static CategoryModel CheckCategory(IContext context, string name)
         {
-            //Context context = new Context();
             return context.Categroies.Where(c => c.Name == name).FirstOrDefault();
         }
 
-        public static SpendingItemModel CheckSpendingItem(Context context,string name)
+        public static SpendingItemModel CheckSpendingItem(IContext context,string name)
         {
-            //Context context = new Context();
             return context.SpendingItems.Where(c => c.Name == name).FirstOrDefault();
         }
 
-        public static IncomeItemModel CheckIncomeItem(Context context, string name)
+        public static IncomeItemModel CheckIncomeItem(IContext context, string name)
         {
-            //Context context = new Context();
             return context.IncomeItems.Where(c => c.Name == name).FirstOrDefault();
+        }
+        public static UserModel CheckUserModel(IContext context, string name)
+        {
+            return context.Users.Where(c => c.UserName == name).FirstOrDefault();
         }
 
         public static Form GetForm(string formType)
@@ -81,7 +82,7 @@ namespace BudgetRegistry.Model
             }
         }
 
-        public static BindingList<Stats> CategoryStats(List<SpendingModel> spendings, List<IncomeModel> incomes)
+        public static BindingList<Stats> CategoryStats(IContext _myContext, List<SpendingModel> spendings, List<IncomeModel> incomes)
         {
             
             List<SpendingItemModel> spendingItems = new List<SpendingItemModel>();

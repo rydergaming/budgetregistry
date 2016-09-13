@@ -62,7 +62,6 @@ namespace BudgetRegistry.View
             }
             else
             {
-                //var item = _myContext.SpendingItems.Where(s => s.Name == spendingNameTextBox.Text).FirstOrDefault();
                 incomeItem.LastValue = (int)numericUpDown.Value;
                 _myContext.SaveChanges();
             }

@@ -69,6 +69,7 @@ namespace BudgetRegistry
                 
             }
         }
+
         private void OpenForm(string openForm)
         {
             var lifeTimeScope = Program.container.BeginLifetimeScope();
@@ -135,7 +136,7 @@ namespace BudgetRegistry
                         if (form != null)
                             form.refresh();
                     }));
-                    var item = reader.GetRecord<CsvModelDateless>();
+                    var item = reader.GetRecord<CsVModelDateless>();
                     var category = Reusable.CheckCategory(_myContext, item.CategoryName);
 
                     if (category == null)
@@ -192,7 +193,6 @@ namespace BudgetRegistry
                 var reader = new CsvReader(streamReader, csvConfig);
                 while ( reader.Read() )
                 {
-
                     Invoke(new Action(() => toolStripStatusLoadSpending.Text = " | Spending Line: " + reader.Row));
                     Invoke(new Action(() =>
                     {
@@ -342,5 +342,6 @@ namespace BudgetRegistry
         {
             OpenForm("AddIncome");
         }
+
     }
 }

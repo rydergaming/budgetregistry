@@ -32,6 +32,7 @@ namespace BudgetRegistry.View
         {
             MainForm form = (MainForm)Reusable.GetForm("BudgetRegistry.MainForm");
             _user = form.CurrentUser;
+            yearNumericUpDown.Value = DateTime.Now.Year;
             var year = (int)yearNumericUpDown.Value;
             _yearlySpendings = _myContext.Spendings.Where(m => m.CreatedTime.Year == year);
             _yearlyIncomes = _myContext.Incomes.Where(m => m.CreatedTime.Year == year);
@@ -51,7 +52,7 @@ namespace BudgetRegistry.View
             var monthlySpendings = _yearlySpendings.Where(m => m.CreatedTime.Month == monthlyStatGrid.CurrentRow.Index + 1).ToList();
             var monthlyIncome = _yearlyIncomes.Where(m => m.CreatedTime.Month == monthlyStatGrid.CurrentRow.Index + 1).ToList();
 
-            monthCategoryGrid.DataSource = (IBindingList)Reusable.CategoryStats(monthlySpendings,monthlyIncome);
+            monthCategoryGrid.DataSource = (IBindingList)Reusable.CategoryStats(_myContext, monthlySpendings,monthlyIncome);
 
             Reusable.PercentStats(monthCategoryGrid);
         }
